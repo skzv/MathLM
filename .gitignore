@@ -1,0 +1,8 @@
+*.swp
+
+# latex 
+*.aux
+*.log
+*.out
+*.dvi
+*.pdf

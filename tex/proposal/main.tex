@@ -66,15 +66,20 @@ We will explore various approaches including
 \item Intermediate steps/chain of thought \cite{wei} prompting style approach to elicit reasoning from the language model
 \item Knowledge distillation from a larger model
 \item Curriculum Learning (start with training on simpler problems)
-\item Using external solvers or symbolic packages, training model to better utilize more exact computation
+\item Using external solvers or symbolic packages, training model to better utilize more exact computation. For example, python can be used for reliable numeric computation - which are a notorious weak point of LLMs - and we will explore the use of coq for verifying logical consistency
 \end{enumerate}
 
 We are interested in reinforcement learning related methods, however recognize the potential algorithmic complexity and compute requirements.
 
 
-
 \section{Evaluation}
 We plan to use performance on GSM8K and MATH as the primary evaluations. There are various existing approaches to improve performance, and those may be used as baselines or ablation studies in our project.
+
+We will focus on comparing against other model performance within the 7b-13b class. 
+
+Quantitatively, specific metrics we will inspect to assess performance include accuracy and pass@k. Accuracy is defined as the fraction of correct answers, while pass@k measures whether any of the top $k$ generated solutions solve each problem. Pass@1 and accuracy are likely equivalent, but assessing performance for larger values of $k$ may give us insight into how close the model is to solving problems and where it is going astray. 
+
+Qualitatively, we will manually inspect a subset of responses for quality and consistency, especially intermediate chain-of-thoughts prompts to see how well the model is making progress towards solving problems.
 
 \bibliographystyle{plain}
 \bibliography{references}

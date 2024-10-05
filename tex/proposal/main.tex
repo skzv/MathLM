@@ -44,77 +44,37 @@
 
 \maketitle
 
-%%\begin{abstract}
-%%The abstract should consist of 1 paragraph describing the motivation for your paper and a %%high-level explanation of the methodology you used/results obtained.
-%%\end{abstract}
-
 \section{Problem Description}	
-Explain the problem and why it is important. Discuss your motivation for pursuing this
-problem. Give some background if necessary. Clearly state what the input and output
-is. Be very explicit: “The input to our algorithm is an {image, amplitude, patient age,
-rainfall measurements, grayscale video, etc.}. We then use a {SVM, neural network, linear
-regression, etc.} to output a predicted {age, stock price, cancer type, music genre, etc.}.”
-This is very important since different teams have different inputs/outputs spanning different
-application domains. Being explicit about this makes it easier for readers. If you are using
-your project for multiple classes, add a paragraph explaining which components of the
-project were used for each class.
+We will attempt to improve the mathematical reasoning performance of small (<10B) LLMs. This is interesting because LLMs can produce text which seems logically and reasonably sound, but often contains mathematical or reasoning errors. Hence this is a valuable area of improvement.
+
 
 \section{Project Challenges}
-You should find existing papers, group them into categories based on their approaches,
-and discuss their strengths and weaknesses, as well as how they are similar to and differ
-from your work. In your opinion, which approaches were clever/good? What is the stateof-the-art?
-Do most people perform the task by hand? You should aim to have at least
-5 references in the related work. Include previous attempts by others at your problem,
-previous technical methods, or previous learning algorithms. Google Scholar is very useful
-for this: https://scholar.google.com/ (you can click “cite” and it generates MLA, APA,
-BibTeX, etc.)
+LLMs are large and expensive to train. Hence we are focusing on small LLMs and will start with open-source base models (e.g. LLaMa-7b). The area has been of recent research interest ranging from academia, the major research labs, to Kaggle competitions. There are various methods to draw inspiration from, but also a decent amount of already explored approaches.
 
 \section{Datasets}
-We will use the GSM8K (grade school math) and MATH (challenging competition mathematics problems) datasets for tuning and evaluation.
+We will use existing datasets such as GSM8K \cite{cobbe}("8.5K high quality linguistically diverse grade school math word problems") and MATH \cite{hendrycks} ("12,500 challenging
+competition mathematics problems"). This will also allow us to compute metrics we can compare against SOTA and other approaches. 
 
-
+We will also investigate augmenting datasets with synthetic data, such as by using other models to change the values in existing datasets. Other related datasets in the literature that we may draw upon include DeepSeekMath Corpus \cite{shao}, MetaMathQA, NuminaMath, PRM800K \cite{lightman}, TinyGSM \cite{liu}, 
 
 \section{Methods}
-Describe your learning algorithms, proposed algorithm(s), or theoretical proof(s). Make
-sure to include relevant mathematical notation. For example, you can include the loss function you are using. It is okay to use formulas from the lectures (online or in-class). For each algorithm, give a short description 
-of how it works. Again, we are looking for your understanding of how these deep
-learning algorithms work. Although the teaching staff probably know the algorithms, future
-readers may not (reports will be posted on the class website). Additionally, if you are
-using a niche or cutting-edge algorithm (anything else not covered in the class), you may want to explain your algorithm using 1/2
-paragraphs. Note: Theory/algorithms projects may have an appendix showing extended
-proofs (see Appendix section below).
+We will explore various approaches including
+\begin{enumerate}
+\item Synthetic data generation for additional training or tuning. Also dataset curation which has proven successful with small language models \cite{gunasekar} 
+\item Finetuning with LoRA \cite{hu}
+\item Training a verifier-like model with variations on the targeting the outcome, process, or other relevant parts of data to learn from
+\item Intermediate steps/chain of thought \cite{wei} prompting style approach to elicit reasoning from the language model
+\item Knowledge distillation from a larger model
+\item Curriculum Learning (start with training on simpler problems)
+\item Using external solvers or symbolic packages, training model to better utilize more exact computation
+\end{enumerate}
+
+We are interested in reinforcement learning related methods, however recognize the potential algorithmic complexity and compute requirements.
+
+
 
 \section{Evaluation}
-You should also give details about what (hyper)parameters you chose (e.g. why did you
-use X learning rate for gradient descent, what was your mini-batch size and why) and how
-you chose them. What your primary metrics are: accuracy, precision,
-AUC, etc. Provide equations for the metrics if necessary. For results, you want to have a
-mixture of tables and plots. If you are solving a classification problem, you should include a
-confusion matrix or AUC/AUPRC curves. Include performance metrics such as precision,
-recall, and accuracy. For regression problems, state the average error. You should have
-both quantitative and qualitative results. To reiterate, you must have both quantitative
-and qualitative results! If it applies: include visualizations of results, heatmaps,
-examples of where your algorithm failed and a discussion of why certain algorithms failed
-or succeeded. In addition, explain whether you think you have overfit to your training set
-and what, if anything, you did to mitigate that. Make sure to discuss the figures/tables in
-your main text throughout this section. Your plots should include legends, axis labels, and
-have font sizes that are legible when printed.
-
-
-
-\section*{References}
-This section should include citations for: (1) Any papers mentioned in the related work
-section. (2) Papers describing algorithms that you used which were not covered in class.
-(3) Code or libraries you downloaded and used. This includes libraries such as scikit-learn, Tensorflow, Pytorch, Keras etc. Acceptable formats include: MLA, APA, IEEE. If you
-do not use one of these formats, each reference entry must include the following (preferably
-in this order): author(s), title, conference/journal, publisher, year. If you are using TeX,
-you can use any bibliography format which includes the items mentioned above. We are excluding
-the references section from the page limit to encourage students to perform a thorough
-literature review/related work section without being space-penalized if they include more
-references. Any choice of citation style is acceptable
-as long as you are consistent. 
-
-we use \cite{liu} \cite{shao} \cite{wei} \cite{hendrycks} \cite{cobbe}
+We plan to use performance on GSM8K and MATH as the primary evaluations. There are various existing approaches to improve performance, and those may be used as baselines or ablation studies in our project.
 
 \bibliographystyle{plain}
 \bibliography{references}

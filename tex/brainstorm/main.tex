@@ -9,6 +9,7 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{graphicx}
+\hypersetup{colorlinks,urlcolor=blue,citecolor=red}
 \title{Mathematical Problem Solving with Language Models (Natural Language)}
 
 \author{
@@ -41,9 +42,33 @@
 
 \maketitle
 
+\section{Benchmarks}
+The following are usefull benchmark tables available at \href{https://paperswithcode.com/}{paperswithcode}
+\begin{itemize}
+\item \href{https://paperswithcode.com/sota/arithmetic-reasoning-on-gsm8k}{GSM8K}
+\item \href{https://paperswithcode.com/sota/math-word-problem-solving-on-math}{MATH}
+\end{itemize}
 
-\section{Notes}
-random thoughts \cite{wang2024}
+\section{SOTA}
+We list here a number of interesting models which have been SOTA. We focus more particularly on SLM (Small Language Models) with less than 10B parameters.
+\begin{itemize}
+\item \textbf{SFT-Mistral-7B} no citation, uses MetaMath + OVM + ensemble
+\item \textbf{OpenMath2-Llama3.1-8B} based on OpenMathInstruct-2 \cite{omi2}
+\end{itemize}
+
+\section{Bestiary}
+We list here a number of methods useful to decipher the benchmark tables for GSM8K and Math
+\begin{itemize}
+\item \textbf{OVM} Outcome supervised Value Model \cite{OVM} 
+\item \textbf{SFT} Supervised Fine-Tuning
+\item \href{https://github.com/meta-math/MetaMath?search=1}{\textbf{MetaMath}}
+\end{itemize}
+
+\section{Methods}
+\begin{itemize}
+\item Cot without prompting \cite{wang2024}
+\end{itemize}
+
 
 \bibliographystyle{plain}
 \bibliography{../references}

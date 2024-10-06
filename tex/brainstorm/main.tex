@@ -49,11 +49,35 @@ The following are usefull benchmark tables available at \href{https://paperswith
 \item \href{https://paperswithcode.com/sota/math-word-problem-solving-on-math}{MATH}
 \end{itemize}
 
+\section{Datasets}
+\begin{itemize}
+\item \textbf{MATH} \cite{hendrycks} 12.5k problems from AMC+AIME 
+\item \textbf{GSM8k} \cite{cobbe} 8.5k high quality grade school math word problems
+\item \textbf{TinyGSM} \cite{liu} synthetic dataset of 12.3M grade school math problems paired with python solutions
+\item \textbf{OpenMathInstruct2} \cite{omi2}
+\end{itemize}
+
+\section{Base models}
+\begin{itemize}
+\item Llama 3.2
+\item Gemma
+\item Phi
+\item DeepSeekMath
+\end{itemize}
+
+\section{Metrics}
+\begin{itemize}
+\item \textbf{accuracy}
+\item \textbf{pass@k}
+\item \textbf{majority@k}
+\end{itemize}
+
 \section{SOTA}
 We list here a number of interesting models which have been SOTA. We focus more particularly on SLM (Small Language Models) with less than 10B parameters.
 \begin{itemize}
 \item \textbf{SFT-Mistral-7B} no citation, uses MetaMath + OVM + ensemble
-\item \textbf{OpenMath2-Llama3.1-8B} based on OpenMathInstruct-2 \cite{omi2}
+\item \href{https://paperswithcode.com/paper/openmathinstruct-2-accelerating-ai-for-math}{\textbf{OpenMath2-Llama3.1-8B}} based on OpenMathInstruct-2 dataset \cite{omi2} see also \href{https://github.com/Kipok/NeMo-Skills/tree/main}{Nemo} on github where they offer a standard framework to eval models on a bunch of the math datasets including MATH and GSM8k among others.
+\item \href{https://paperswithcode.com/paper/an-empirical-study-of-data-ability-boundary}{\textbf{DeepSeekMath-7B}}
 \end{itemize}
 
 \section{Bestiary}
@@ -62,13 +86,19 @@ We list here a number of methods useful to decipher the benchmark tables for GSM
 \item \textbf{OVM} Outcome supervised Value Model \cite{OVM} 
 \item \textbf{SFT} Supervised Fine-Tuning
 \item \href{https://github.com/meta-math/MetaMath?search=1}{\textbf{MetaMath}}
+\item \href{https://github.com/xjdr-alt/entropix}{\textbf{entropy}} and \textbf{varentropy} (seems to be $E_{x\sim p}\left[\log^2 p(x)\right]$
 \end{itemize}
 
 \section{Methods}
 \begin{itemize}
-\item Cot without prompting \cite{wang2024}
+\item \textbf{Verifier} \cite{cobbe}
+\item \textbf{CoT} see \cite{wei} \cite{wang2024}
 \end{itemize}
 
+\section{Extra}
+\begin{itemize}
+\item \href{https://dennyzhou.github.io/LLM-Reasoning-Berkeley.pdf}{LLM Reasoning} talk from \href{https://dennyzhou.github.io/}{Denny Zhou} who is founder and lead of the Reasoning Team in Google DeepMind.
+\end{itemize}
 
 \bibliographystyle{plain}
 \bibliography{../references}

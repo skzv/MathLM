@@ -1,0 +1,166 @@
+\documentclass{article}
+
+\usepackage[final]{../neurips_2019}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{lipsum}
+
+\newcommand{\note}[1]{\textcolor{blue}{{#1}}}
+
+\title{Mathematical Problem Solving with Language Models (Natural Language)
+  %Title of your project \\
+  %\vspace{1em}
+  %\small{\normalfont Stanford CS229 Project}  % Select one and delete the other
+}
+
+\author{
+  Yacine Dolivet\\
+  \texttt{yacine@stanford.edu} \\
+  \And
+  Stephen Ge\\
+  \texttt{scge@stanford.edu} \\
+   \And
+  Sasha Kuznetsov\\
+  \texttt{skz@stanford.edu} \\
+  % Examples of more authors
+%   \And
+%   Name \\
+%   Department of Computer Science \\
+%   Stanford University \\
+%   \texttt{name@stanford.edu} \\
+%   \And
+%   Name \\
+%   Department of Computer Science \\
+%   Stanford University \\
+%   \texttt{name@stanford.edu}
+}
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+%The abstract is optional, depending on your available space. It should consist of 1 paragraph consisting of the motivation for your paper and a high-level explanation of the methodology you used/results obtained.
+%\end{abstract}
+
+
+% {\color{red} This template does not contain the full instruction set for this assignment; please refer back to the milestone instructions PDF.}
+
+\section{Introduction}
+We evaluate the mathematical reasoning abilities of small (<10B parameters) language models (LMs) via their performance on perturbations of benchmark math problem solving data sets. This is interesting because LLMs can produce text which seems logically and reasonably sound, but often contains mathematical or reasoning errors. Hence this is a valuable area of improvement. The inputs to our evaluations are various open source language models such as Llama 3 \citep{dubey}, OpenMathInstruct-2 \citep{toshniwal}, Phi-3.5 \citep{abdin}, and datasets such as GSM8K \citep{cobbe}, GSM-IC \citep{shi}.
+
+We propose simple methods to measure reasoning heuristics beyond correctness of final answer, including the language models' abilities to detect functional equivalence and presence of irrelevant context. We compare detection of perturbations through direct prompting and training linear probes.
+
+\section{Related Work}
+A seris of techniques have been developed for improving the reasoning capabilities of large language models, in particular on mathematical problem solving. Chain-of-Thought (CoT) prompting, or eliciting a series of intermediate steps, is explored in \citep{wei}. CoT improves LLM performance on reasoning tasks, achieving then state of the art performance on the GSM8K benchmark. Further gains were achieved in \citep{wang} via the self-consistency (SC) decoding strategy. \citep{lightman} find that process supervision, training on feedback for intermediate reasoning steps, significantly outperforms final result or outcome supervision. \citep{chowdhery} introduces GSM8K-Python, converting the math problem reasoning task into one of generating a python program that returns a correct answer, using the python interpeter as a tool for numerical evaluation.
+
+There is also a collection of related work in the adversial or challenge dataset direction, demonstrating pitfalls or difficulties with eliciting correct reasoning from large language models with variations of math problems. \citep{li} introduces GSM-Plus, using variations and distrators to create variations on the original GSM8K dataset. Irrelevant context in particular is studied in \citep{shi}, where additional clauses are added to easy base problems from GSM8K to distract the language model. \citep{mirzadeh} conduct a large scale study across numerous models using new GSM-Symbolic and GSM-NoOp datasets changing symbolic values and adding additional clauses. Minimal perturbations to the problem statement in the form of typos and their affect on LLM reasoning robustness are studied in \citep{gan}.
+
+\section{Dataset and Features}
+
+The original GSM8K data from \citep{cobbe} contains 7.5k training and 1k test "high quality linguistically diverse grade school math world problems". We have also evaluated various open models on GSM-IC, which consists of 58,052 examples constructed from base problems in GSM8K via the addition of irrelevant context. For computation reasons, we sampled 4000 examples as in the paper \citep{shi} when evaluating over a slower model.
+
+Due to the unexpected high performance of Llama 3.1 and OpenMathInstruct on GSM-IC, we are considering constructing a harder distracting context/additional clauses dataset in order to test remediation methods for distraction. We are also constructing our own functional equivalence dataset of math problems starting with a python function involving simple arithmetic operations and prompting a frontier language model to generate word problems out of the function.
+
+We are also conducting linear probing, in which the dataset features will be activations of the language model and the labels will be booleans corresponding to functional equivalence of two word problems or the presence of irrelevant clauses.
+
+\section{Methods}
+For irrelevant context, our original proposed methodology was to prompt the LLM to directly try to detect the presence of additional clauses, and if detected to identify the irrelevant sentence(s). The success of this task essentially restores the problem back to the original pre-perturbation, and represents a performance recovery. We are proceeding with linear probing of the presence of irrelevant context, which we had originally intended to be a baseline for the detection task.
+
+For functional equivalence, we start with a simple python function involving only basic arithmetic operations and prompt a frontier language model to generate grade school math problems corresponding to the function. For example, from the function 
+\begin{center}
+\begin{verbatim}
+  def mod(a,b,c,d):
+    answer = a * 90/100 - b * c + a * b * c + d
+\end{verbatim}
+\end{center}
+the following problem was generated 
+\begin{verbatim}
+Problem 1
+[GSP]  
+A museum sells an entrance ticket for $50. There is a 10% discount for
+online purchases. A visitor buys 2 art guides priced at $15 each. The 
+museum has a special promotion that deducts the total cost of the art
+guides from the ticket price. Additionally, a processing fee of $10 is
+added for buying tickets online. What is the total cost for the visitor?  
+[GSP] 
+\end{verbatim}
+
+
+\section{Experiments / Results / Discussion}
+We evaluated Llama 3.1 8B Instruct, OpenMathInstruct-2, and Phi-3-mini 3.8B on GSM8K as a baseline and then GSM-IC. The first two models achieved over 90\% accuracy on GSM-IC via a standard prompt and greedy decoding. Phi 3 performance was much lower (below 50\%). As previously discussed, the unexpected high performance of the Llama models is leading us to consider other adversarial datasets, including generating our own.
+
+
+\section{Next Steps}
+We look to construct the functional equivalence dataset. We are proceeding with linear probing of the LLMs on the functional equivalence and irrelevant context detection tasks. We will evaluate models further on available datasets such as GSM-Plus to see if there is suitably for our proposed distraction remediation methods.
+
+\section{Appendices} Note that GSM8K and GSM-IC performance is not directly comparable, since IC is generated from a restricted subset of GSM8K base problems that are solvable.
+
+OpenMathInstruct-2 Performance on GSM8K and GSM-IC
+\begin{verbatim}
+  ----------------------- gsm-ic-mstep -----------------------
+  evaluation_mode | num_entries | symbolic_correct | no_answer
+  greedy          | 23832       | 97.16            | 0.03     
+
+
+  -------------------------- gsm8k ---------------------------
+  evaluation_mode | num_entries | symbolic_correct | no_answer
+  greedy          | 1319        | 91.28            | 0.08     
+
+
+  ----------------------- gsm-ic-2step -----------------------
+  evaluation_mode | num_entries | symbolic_correct | no_answer
+  greedy          | 34220       | 96.48            | 0.05  \end{verbatim}
+
+Llama3.1-8B Performance on GSM8K and GSM-IC
+\begin{verbatim}
+  ----------------------- gsm-ic-mstep -----------------------
+  evaluation_mode | num_entries | symbolic_correct | no_answer
+  greedy          | 23832       | 91.69            | 0.41     
+
+
+  -------------------------- gsm8k ---------------------------
+  evaluation_mode | num_entries | symbolic_correct | no_answer
+  greedy          | 1319        | 82.79            | 0.91     
+
+
+  ----------------------- gsm-ic-2step -----------------------
+  evaluation_mode | num_entries | symbolic_correct | no_answer
+  greedy          | 34220       | 95.06            | 0.19  \end{verbatim}
+
+Phi3-mini Performance on GSM8K and GSM-IC
+\begin{verbatim}
+  ----------------------- gsm-ic-mstep -----------------------
+  evaluation_mode | num_entries | symbolic_correct | no_answer
+  greedy          | 4096        | 44.07            | 0.20     
+  
+  
+  -------------------------- gsm8k ---------------------------
+  evaluation_mode | num_entries | symbolic_correct | no_answer
+  greedy          | 1319        | 39.80            | 0.15     
+  
+  
+  ----------------------- gsm-ic-2step -----------------------
+  evaluation_mode | num_entries | symbolic_correct | no_answer
+  greedy          | 4096        | 44.07            | 0.12   \end{verbatim}
+
+
+\section{Contributions}
+YD and SK led infrastruture exploration, in particular compute platforms and inference, evaluation, and training pipeline (NeMo Skills). YD is exploring the functional equivalence direction. SK is training the linear probing on open models. SG explored research directions, carried out initial experiments with GSM-IC on recent small LMs, drafted this milestone, and is exploring further perturbations.
+
+We benefited from conversations with Neil Band, Ryan Chi, and Kamyar Salahi.
+
+\bibliographystyle{acl_natbib}
+\bibliography{../references}
+
+
+\end{document}

@@ -77,7 +77,7 @@ def train_probes(model: LlamaModelWrapper,
                  layer_indices: List[int],
                  train_loader: DataLoader, 
                  val_loader: DataLoader,
-                 num_epochs: int = 5,
+                 num_epochs: int = 15,
                  learning_rate: float = 1e-3):
     """Train linear probes for specified layers."""
     device = model.device

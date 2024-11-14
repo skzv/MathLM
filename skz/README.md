@@ -1,3 +1,9 @@
+## Linear Probing Sentiment Classifier
+
+An exploration of using linear probing of LLama3.1-8B-Instruct layers to do sentiment analysis.
+
+## Useful Notes
+
 By default, Python may include the user site-packages directory in sys.path. To prevent this:
 
 Set the PYTHONNOUSERSITE Environment Variable:

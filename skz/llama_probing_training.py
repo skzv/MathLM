@@ -256,6 +256,4 @@ if __name__ == "__main__":
 
     # Save the probes
     for i, probe in enumerate(probes):
-        torch.save(probe.state_dict(), f"probe_{i}.pt")
-
-    
+        torch.save(probe.state_dict(), f"training/probe_{i}.pt")

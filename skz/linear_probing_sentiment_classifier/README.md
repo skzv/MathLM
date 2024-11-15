@@ -15,3 +15,8 @@ Train model by running `llama_probing_training.py`. Probes and training loss cha
 
 ## Running Model
 Run `run_sentiment_classifier.py` which loads the LLama3.1-8B-Instruct model and probes it. 
+
+## Useful Notes
+
+### Maximizing GPU Utilization
+Training was slow, and I noticed that most of the GPU memory was unused during utilization. I was watching the nvidia-smi output continously with `watch -n 1 nvidia-smi` and noticed that most of the GPU memory was unused. So I increased the batch size to maximize the memory utilization. 

@@ -10,6 +10,8 @@ from typing import List, Dict
 from transformers import LlamaModel
 from transformers import AutoTokenizer
 import matplotlib.pyplot as plt
+from datasets import load_dataset
+from tqdm import tqdm
 
 class LlamaModelWrapper:
     def __init__(self, model_path: str, device: str = 'cuda'):
@@ -77,7 +79,7 @@ def train_probes(model: LlamaModelWrapper,
                  layer_indices: List[int],
                  train_loader: DataLoader, 
                  val_loader: DataLoader,
-                 num_epochs: int = 15,
+                 num_epochs: int = 5,
                  learning_rate: float = 1e-3):
     """Train linear probes for specified layers."""
     device = model.device
@@ -95,7 +97,7 @@ def train_probes(model: LlamaModelWrapper,
     }
     
     for epoch in range(num_epochs):
-        print(f"\nEpoch {epoch+1}/{num_epochs}")
+        # print(f"\nEpoch {epoch+1}/{num_epochs}")
         
         # Training
         for probe in probes:
@@ -105,7 +107,8 @@ def train_probes(model: LlamaModelWrapper,
         train_correct = [0 for _ in layer_indices]
         total = 0
         
-        for batch in train_loader:
+        progress_bar = tqdm(train_loader, desc=f"Epoch {epoch + 1}/{num_epochs} Training", unit="batch")
+        for batch in progress_bar:
             input_ids = batch['input_ids'].to(device)
             labels = batch['label'].to(device)
             
@@ -141,7 +144,8 @@ def train_probes(model: LlamaModelWrapper,
         val_total = 0
         
         with torch.no_grad():
-            for batch in val_loader:
+            progress_bar = tqdm(val_loader, desc=f"Epoch {epoch + 1}/{num_epochs} Validation", unit="batch")
+            for batch in progress_bar:
                 input_ids = batch['input_ids'].to(device)
                 labels = batch['label'].to(device)
                 
@@ -201,29 +205,42 @@ def plot_metrics(metrics, layer_indices):
         plt.savefig(f"training/layer_{layer_idx}.png")
 
 def main():
-    # Example sentiment classification task
-    texts = [
-        "I love this movie, it's amazing!",
-        "This was a terrible waste of time.",
-        "The food was delicious and the service excellent.",
-        "I regret watching this, very disappointing.",
-        "An absolutely fantastic performance!",
-        "Not my cup of tea, I didn't enjoy it.",
-        "The plot was predictable and boring.",
-        "A delightful experience from start to finish.",
-        # Add more examples...
-    ]
+    # # Example sentiment classification task
+    # texts = [
+    #     "I love this movie, it's amazing!",
+    #     "This was a terrible waste of time.",
+    #     "The food was delicious and the service excellent.",
+    #     "I regret watching this, very disappointing.",
+    #     "An absolutely fantastic performance!",
+    #     "Not my cup of tea, I didn't enjoy it.",
+    #     "The plot was predictable and boring.",
+    #     "A delightful experience from start to finish.",
+    #     # Add more examples...
+    # ]
     
-    # Labels: 0 for negative, 1 for positive
-    labels = [1, 0, 1, 0, 1, 0, 0, 1]
+    # # Labels: 0 for negative, 1 for positive
+    # labels = [1, 0, 1, 0, 1, 0, 0, 1]
+
+    # Load the IMDb dataset
+    # dataset = load_dataset("imdb")
+    dataset = load_dataset("glue", "sst2")
+
+    # Use a subset of the dataset for training
+    train_data = dataset['train'].shuffle(seed=42).select(range(1024))  # Select 100 examples for training
+
+    # Extract texts and labels
+    # texts = train_data['text']
+    texts = train_data['sentence']
+    labels = train_data['label']
     
     # Initialize model
     model_path = os.path.expanduser("~/.llama/checkpoints/Llama3.1-8B-Instruct-hf")
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    print(f"Using device: {device}")
     model = LlamaModelWrapper(model_path, device=device)
     
     # Create dataset
-    dataset = SimpleDataset(texts, labels, model.tokenizer)
+    dataset = SimpleDataset(texts, labels, model.tokenizer, max_length=64)
     
     # Split dataset
     train_size = int(0.8 * len(dataset))
@@ -231,8 +248,9 @@ def main():
     train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size])
     
     # Create data loaders
-    train_loader = DataLoader(train_dataset, batch_size=2, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=2)
+    batch_size = 32
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size)
     
     # Specify layers to probe
     layer_indices = [8, 16, 24, 31]  # Example layer indices

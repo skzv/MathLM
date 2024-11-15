@@ -44,5 +44,6 @@ def classify_sentiment(model_wrapper: LlamaModelWrapper, probes: List[LinearProb
         predictions.append(predicted_label)
 
     # Majority voting for final prediction
+    print(predictions)
     final_prediction = max(set(predictions), key=predictions.count)
     return final_prediction

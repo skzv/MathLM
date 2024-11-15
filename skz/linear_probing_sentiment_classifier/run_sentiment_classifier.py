@@ -18,3 +18,13 @@ if __name__ == "__main__":
     print("\n\n\n")
     print(f"Input: {input_text}")
     print(f"Predicted Sentiment: {sentiment_label}")
+
+    while(True):
+        input_text = input("Enter a sentence to classify its sentiment (or 'exit' to quit): ")
+        if input_text.lower() == "exit":
+            break
+
+        sentiment = classify_sentiment(model_wrapper, probes, layer_indices, input_text)
+        print(sentiment)
+        sentiment_label = "Positive" if sentiment == 1 else "Negative"
+        print(f"Predicted Sentiment: {sentiment_label}")

@@ -1,6 +1,6 @@
 import torch
 from typing import List
-from llama_probing_training import LlamaModelWrapper, LinearProbe
+from llama_probing_training import LlamaModelWrapper, LinearProbe, ComplexProbe
 
 def load_model_and_probes(model_path: str, probe_paths: List[str], device: str = 'cuda'):
     """Load the saved model and probes."""
@@ -10,14 +10,14 @@ def load_model_and_probes(model_path: str, probe_paths: List[str], device: str =
     # Load the probes
     probes = []
     for probe_path in probe_paths:
-        probe = LinearProbe(model_wrapper.model.config.hidden_size, num_classes=2).to(device)
+        probe = ComplexProbe(model_wrapper.model.config.hidden_size, hidden_dim = 64, num_classes=2).to(device)
         probe.load_state_dict(torch.load(probe_path))
         probe.eval()  # Set to evaluation mode
         probes.append(probe)
 
     return model_wrapper, probes
 
-def classify_sentiment(model_wrapper: LlamaModelWrapper, probes: List[LinearProbe], layer_indices: List[int], text: str):
+def classify_sentiment(model_wrapper: LlamaModelWrapper, probes: List[ComplexProbe], layer_indices: List[int], text: str):
     """Classify sentiment of a given text using the loaded model and probes."""
     device = model_wrapper.device
 

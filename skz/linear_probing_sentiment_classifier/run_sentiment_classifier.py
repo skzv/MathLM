@@ -4,8 +4,8 @@ from sentiment_classifier import load_model_and_probes, classify_sentiment
 if __name__ == "__main__":
     # Paths
     model_path = os.path.expanduser("~/.llama/checkpoints/Llama3.1-8B-Instruct-hf")
-    probe_paths = [f"training/probe_{i}.pt" for i in range(4)]  # Adjust based on number of probes
-    layer_indices = [8, 16, 24, 31]  # Same as training
+    probe_paths = [f"training/probe_{i}.pt" for i in range(3)]  # Adjust based on number of probes
+    layer_indices = [26, 30, 31]  # Same as training
 
     # Load model and probes
     model_wrapper, probes = load_model_and_probes(model_path, probe_paths)

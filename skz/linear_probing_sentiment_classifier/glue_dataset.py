@@ -14,7 +14,7 @@ labels = train_data['label']
 # texts and labels are now loaded from the SST-2 dataset
 
 # Print some examples
-for i in range(5):
+for i in range(20):
     print(f"Text: {texts[i]}")
     print(f"Label: {labels[i]}")
     print()

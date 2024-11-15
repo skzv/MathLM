@@ -45,6 +45,19 @@ class LinearProbe(nn.Module):
         
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.linear(x)
+    
+class ComplexProbe(nn.Module):
+    def __init__(self, input_dim: int, hidden_dim: int, num_classes: int):
+        super(ComplexProbe, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(hidden_dim, num_classes)
+    
+    def forward(self, x):
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        return x
 
 class SimpleDataset(Dataset):
     def __init__(self, texts: List[str], labels: List[int], tokenizer: AutoTokenizer, max_length: int = 128):
@@ -75,7 +88,8 @@ class SimpleDataset(Dataset):
         }
 
 def train_probes(model: LlamaModelWrapper, 
-                 probes: List[LinearProbe], 
+                #  probes: List[LinearProbe], 
+                 probes: List[ComplexProbe],
                  layer_indices: List[int],
                  train_loader: DataLoader, 
                  val_loader: DataLoader,
@@ -84,6 +98,7 @@ def train_probes(model: LlamaModelWrapper,
     """Train linear probes for specified layers."""
     device = model.device
     criterion = nn.CrossEntropyLoss()
+    # criterion = nn.BCEWithLogitsLoss()
     optimizers = [AdamW(probe.parameters(), lr=learning_rate) for probe in probes]
     
     # Metrics tracking
@@ -121,6 +136,8 @@ def train_probes(model: LlamaModelWrapper,
             for i, (probe, optimizer) in enumerate(zip(probes, optimizers)):
                 optimizer.zero_grad()
                 outputs = probe(layer_outputs[i])
+                # print(outputs.shape)
+                # print(labels.shape)
                 loss = criterion(outputs, labels)
                 loss.backward()
                 optimizer.step()
@@ -172,6 +189,8 @@ def train_probes(model: LlamaModelWrapper,
             print(f"Train Acc: {metrics[layer_idx]['train_acc'][-1]:.2f}%")
             print(f"Val Loss: {metrics[layer_idx]['val_loss'][-1]:.4f}")
             print(f"Val Acc: {metrics[layer_idx]['val_acc'][-1]:.2f}%")
+            print()
+            print()
     
     return metrics
 
@@ -205,7 +224,7 @@ def plot_metrics(metrics, layer_indices):
         plt.savefig(f"training/layer_{layer_idx}.png")
 
 def main():
-    # # Example sentiment classification task
+    # Example sentiment classification task
     # texts = [
     #     "I love this movie, it's amazing!",
     #     "This was a terrible waste of time.",
@@ -218,18 +237,18 @@ def main():
     #     # Add more examples...
     # ]
     
-    # # Labels: 0 for negative, 1 for positive
+    # Labels: 0 for negative, 1 for positive
     # labels = [1, 0, 1, 0, 1, 0, 0, 1]
 
     # Load the IMDb dataset
     # dataset = load_dataset("imdb")
     dataset = load_dataset("glue", "sst2")
 
-    # Use a subset of the dataset for training
-    train_data = dataset['train'].shuffle(seed=42).select(range(1024))  # Select 100 examples for training
+    # # Use a subset of the dataset for training
+    train_data = dataset['train'].shuffle(seed=42).select(range(2*5120))  # Select 100 examples for training
 
-    # Extract texts and labels
-    # texts = train_data['text']
+    # # Extract texts and labels
+    # # texts = train_data['text']
     texts = train_data['sentence']
     labels = train_data['label']
     
@@ -240,7 +259,7 @@ def main():
     model = LlamaModelWrapper(model_path, device=device)
     
     # Create dataset
-    dataset = SimpleDataset(texts, labels, model.tokenizer, max_length=64)
+    dataset = SimpleDataset(texts, labels, model.tokenizer, max_length=128)
     
     # Split dataset
     train_size = int(0.8 * len(dataset))
@@ -253,16 +272,20 @@ def main():
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
     
     # Specify layers to probe
-    layer_indices = [8, 16, 24, 31]  # Example layer indices
+    # layer_indices = [8, 16, 24, 31]  # Example layer indices
+    # layer_indices = [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+    layer_indices = [26, 30, 31]
     
     # Create probes (2 classes for binary classification)
+    hidden_dim = 64
     probes = [
-        LinearProbe(model.model.config.hidden_size, num_classes=2).to(model.device)
+        ComplexProbe(model.model.config.hidden_size, hidden_dim=hidden_dim, num_classes=2).to(model.device)
+        # LinearProbe(model.model.config.hidden_size, num_classes=2).to(model.device)
         for _ in layer_indices
     ]
     
     # Train probes
-    metrics = train_probes(model, probes, layer_indices, train_loader, val_loader)
+    metrics = train_probes(model, probes, layer_indices, train_loader, val_loader, num_epochs=25, learning_rate=2e-5)
     
     # Plot metrics
     plot_metrics(metrics, layer_indices)

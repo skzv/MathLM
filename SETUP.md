@@ -135,6 +135,9 @@ NB: for the moment it's still beta and i only see RTX boxes available, no H100
     https://docs.anaconda.com/miniconda/
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /opt/miniconda-installer.sh
   nb: i use /opt/conda as prefix and chose to allow to autostart the bash script
+  - setup
+    sudo /opt/miniconda-installer.sh
+    conda init
   - create the mlm environment
     conda create -n mlm
   - install pytorch

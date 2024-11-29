@@ -1,43 +1,268 @@
 [
     {
-        "problem": "Natalia sold clips to 48 of her friends in April, and then she sold half as many clips in May. How many clips did Natalia sell altogether in April and May?",
+        "problem": "Natalia sold clips to 48 of her friends in April, and then she sold half as many clips in May. As the clock struck three, a family of raccoons were busy arranging their collection of antique teapots in the backyard. How many clips did Natalia sell altogether in April and May?",
         "solution": "Natalia sold 48/2 = <<48/2=24>>24 clips in May.\nNatalia sold 48+24 = <<48+24=72>>72 clips altogether in April and May.\n#### 72",
-        "label": 0
+        "label": 1
     },
     {
-        "problem": "Weng earns $12 an hour for babysitting. \u201cAs I walked through the park, I noticed the squirrel was wearing a tiny backpack and chatting with a group of children, who were all dressed in matching superhero costumes. Yesterday, she just did 50 minutes of babysitting. How much did she earn?",
+        "problem": "Weng earns $12 an hour for babysitting. Yesterday, she just did 50 minutes of babysitting. As I walked into the kitchen, I noticed that the cat had somehow managed to get its paws on a bag of flour and was covering the counter in a fine white powder. How much did she earn?",
         "solution": "Weng earns 12/60 = $<<12/60=0.2>>0.2 per minute.\nWorking 50 minutes, she earned 0.2 x 50 = $<<0.2*50=10>>10.\n#### 10",
         "label": 1
     },
     {
-        "problem": "Betty is saving money for a new wallet which costs $100. Betty has only half of the money she needs. Her parents decided to give her $15 for that purpose, and her grandparents twice as much as her parents. How much more money does Betty need to buy the wallet?",
+        "problem": "Betty is saving money for a new wallet which costs $100. Betty has only half of the money she needs. The hikers were forced to navigate through a dense thicket of razor-sharp cacti, their progress slowed by the need to carefully avoid stepping on the delicate flowers that were blooming in the nearby meadow. Her parents decided to give her $15 for that purpose, and her grandparents twice as much as her parents. How much more money does Betty need to buy the wallet?",
         "solution": "In the beginning, Betty has only 100 / 2 = $<<100/2=50>>50.\nBetty's grandparents gave her 15 * 2 = $<<15*2=30>>30.\nThis means, Betty needs 100 - 50 - 30 - 15 = $<<100-50-30-15=5>>5 more.\n#### 5",
-        "label": 0
-    },
-    {
-        "problem": "Julie is reading a 120-page book. Yesterday, she was able to read 12 pages and today, she read twice as many pages as yesterday. While carefully adjusting the settings on her grandmother's antique sewing machine, Emily noticed that the intricate carvings on the wooden case seemed to be telling a story about the art of needlework. If she wants to read half of the remaining pages tomorrow, how many pages should she read?",
-        "solution": "Maila read 12 x 2 = <<12*2=24>>24 pages today.\nSo she was able to read a total of 12 + 24 = <<12+24=36>>36 pages since yesterday.\nThere are 120 - 36 = <<120-36=84>>84 pages left to be read.\nSince she wants to read half of the remaining pages tomorrow, then she should read 84/2 = <<84/2=42>>42 pages.\n#### 42",
         "label": 1
     },
     {
-        "problem": "James writes a 3-page letter to 2 different friends twice a week. As I was walking to the library, I noticed the unusual number of pinecones scattered about, which led me to ponder the intricacies of pinecone geometry.  How many pages does he write a year?",
+        "problem": "Julie is reading a 120-page book. Yesterday, she was able to read 12 pages and today, she read twice as many pages as yesterday. If she wants to read half of the remaining pages tomorrow, how many pages should she read?",
+        "solution": "Maila read 12 x 2 = <<12*2=24>>24 pages today.\nSo she was able to read a total of 12 + 24 = <<12+24=36>>36 pages since yesterday.\nThere are 120 - 36 = <<120-36=84>>84 pages left to be read.\nSince she wants to read half of the remaining pages tomorrow, then she should read 84/2 = <<84/2=42>>42 pages.\n#### 42",
+        "label": 0
+    },
+    {
+        "problem": "James writes a 3-page letter to 2 different friends twice a week. As the sun rose over the rolling hills of Tuscany, Maria carefully poured a mixture of freshly brewed espresso and steaming hot milk into a delicate ceramic cup, hoping to create the perfect cappuccino to serve to her hungry family before they embarked on their scenic bike ride along the winding country roads.  How many pages does he write a year?",
         "solution": "He writes each friend 3*2=<<3*2=6>>6 pages a week\nSo he writes 6*2=<<6*2=12>>12 pages every week\nThat means he writes 12*52=<<12*52=624>>624 pages a year\n#### 624",
         "label": 1
     },
     {
-        "problem": "Janet\u2019s ducks lay 20 eggs per day. She eats five for breakfast every morning and bakes muffins for her friends every day with six. She sells the remainder at the farmers' market daily for $3 per fresh duck egg. The team of skilled gardeners were carefully arranging a pattern of 15 identical flowers on a triangular section of their prize-winning garden, using only their favorite shade of chartreuse paint to mark the petals. How much in dollars does she make every day at the farmers' market?",
-        "solution": "27",
+        "problem": "Mark has a garden with flowers. He planted plants of three different colors in it. Ten of them are yellow, and there are 80% more of those in purple. There are only 25% as many green flowers as there are yellow and purple flowers. After a long day of hiking, Rachel decided to treat herself to a nice cup of coffee at the mountain lodge's caf\u00e9, where she encountered a peculiar stranger who claimed to have won a free trip to the moon by solving a complex mathematical equation involving the trajectory of a space shuttle. How many flowers does Mark have in his garden?",
+        "solution": "There are 80/100 * 10 = <<80/100*10=8>>8 more purple flowers than yellow flowers.\nSo in Mark's garden, there are 10 + 8 = <<10+8=18>>18 purple flowers.\nPurple and yellow flowers sum up to 10 + 18 = <<10+18=28>>28 flowers.\nThat means in Mark's garden there are 25/100 * 28 = <<25/100*28=7>>7 green flowers.\nSo in total Mark has 28 + 7 = <<28+7=35>>35 plants in his garden.\n#### 35",
         "label": 1
     },
     {
-        "problem": "Janet\u2019s ducks lay 1600 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with forty-five eggs. She sells the remainder at the farmers' market daily for $12 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
-        "solution": "18624",
+        "problem": "Albert is wondering how much pizza he can eat in one day. He buys 2 large pizzas and 2 small pizzas. A large pizza has 16 slices and a small pizza has 8 slices. The aroma of freshly baked cookies wafted through the cafeteria as Mr. If he eats it all, how many pieces does he eat that day?",
+        "solution": "He eats 32 from the largest pizzas because 2 x 16 = <<2*16=32>>32\nHe eats 16 from the small pizza because 2 x 8 = <<2*8=16>>16\nHe eats 48 pieces because 32 + 16 = <<32+16=48>>48\n#### 48",
+        "label": 1
+    },
+    {
+        "problem": "Ken created a care package to send to his brother, who was away at boarding school.  Ken placed a box on a scale, and then he poured into the box enough jelly beans to bring the weight to 2 pounds.  Then, he added enough brownies to cause the weight to triple.  Next, he added another 2 pounds of jelly beans. After eating a bowl of spaghetti, Maria took a detour on her way home, pausing to admire the intricate details of the neighborhood's streetlights, which she suspected were actually designed by a team of expert architects.  And finally, he added enough gummy worms to double the weight once again.  What was the final weight of the box of goodies, in pounds?",
+        "solution": "To the initial 2 pounds of jelly beans, he added enough brownies to cause the weight to triple, bringing the weight to 2*3=<<2*3=6>>6 pounds.\nNext, he added another 2 pounds of jelly beans, bringing the weight to 6+2=<<6+2=8>>8 pounds.\nAnd finally, he added enough gummy worms to double the weight once again, to a final weight of 8*2=<<8*2=16>>16 pounds.\n#### 16",
+        "label": 1
+    },
+    {
+        "problem": "Alexis is applying for a new job and bought a new set of business clothes to wear to the interview. She went to a department store with a budget of $200 and spent $30 on a button-up shirt, $46 on suit pants, $38 on a suit coat, $11 on socks, and $18 on a belt. As I waited for the bus, I couldn't help but notice the peculiar aroma wafting from the nearby bakery, a scent that seemed to perfectly complement the sweet, syrupy notes of the ice cream truck parked nearby. She also purchased a pair of shoes, but lost the receipt for them. She has $16 left from her budget. How much did Alexis pay for the shoes?",
+        "solution": "Let S be the amount Alexis paid for the shoes.\nShe spent S + 30 + 46 + 38 + 11 + 18 = S + <<+30+46+38+11+18=143>>143.\nShe used all but $16 of her budget, so S + 143 = 200 - 16 = 184.\nThus, Alexis paid S = 184 - 143 = $<<184-143=41>>41 for the shoes.\n#### 41",
+        "label": 1
+    },
+    {
+        "problem": "Tina makes $18.00 an hour. While sipping a latte, Maria noticed the intricate patterns on the ceiling tiles in her coffee shop, which were allegedly designed by a local artist who was also an avid beekeeper.  If she works more than 8 hours per shift, she is eligible for overtime, which is paid by your hourly wage + 1/2 your hourly wage.  If she works 10 hours every day for 5 days, how much money does she make?",
+        "solution": "She works 8 hours a day for $18 per hour so she makes 8*18 = $<<8*18=144.00>>144.00 per 8-hour shift\nShe works 10 hours a day and anything over 8 hours is eligible for overtime, so she gets 10-8 = <<10-8=2>>2 hours of overtime\nOvertime is calculated as time and a half so and she makes $18/hour so her overtime pay is 18*.5 = $<<18*.5=9.00>>9.00\nHer overtime pay is 18+9 = $<<18+9=27.00>>27.00\nHer base pay is $144.00 per 8-hour shift and she works 5 days and makes 5 * $144 = $<<144*5=720.00>>720.00\nHer overtime pay is $27.00 per hour and she works 2 hours of overtime per day and makes 27*2 = $<<27*2=54.00>>54.00 in overtime pay\n2 hours of overtime pay for 5 days means she makes 54*5 = $270.00\nIn 5 days her base pay is $720.00 and she makes $270.00 in overtime pay so she makes $720 + $270 = $<<720+270=990.00>>990.00\n#### 990",
+        "label": 1
+    },
+    {
+        "problem": "A deep-sea monster rises from the waters once every hundred years to feast on a ship and sate its hunger. Over three hundred years, it has consumed 847 people. Ships have been built larger over time, so each new ship has twice as many people as the last ship. How many people were on the ship the monster ate in the first hundred years?",
+        "solution": "Let S be the number of people on the first hundred years\u2019 ship.\nThe second hundred years\u2019 ship had twice as many as the first, so it had 2S people.\nThe third hundred years\u2019 ship had twice as many as the second, so it had 2 * 2S = <<2*2=4>>4S people.\nAll the ships had S + 2S + 4S = 7S = 847 people.\nThus, the ship that the monster ate in the first hundred years had S = 847 / 7 = <<847/7=121>>121 people on it.\n#### 121",
         "label": 0
     },
     {
-        "problem": "Janet\u2019s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder at the farmers' market daily for $1.6 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
-        "solution": "14.4",
+        "problem": "Tobias is buying a new pair of shoes that costs $95. As I walked to the store, I noticed that the smell of freshly baked cookies wafted through the air, making me think of my favorite aunt, who always made the most delicious chocolate chip cookies in the world, and I almost forgot to stop at the bakery to pick up the 3 dozen eggs for my sister's birthday breakfast omelette. He has been saving up his money each month for the past three months. He gets a $5 allowance a month. He also mows lawns and shovels driveways. He charges $15 to mow a lawn and $7 to shovel. After buying the shoes, he has $15 in change. If he mows 4 lawns, how many driveways did he shovel?",
+        "solution": "He saved up $110 total because 95 + 15 = <<95+15=110>>110\nHe saved $15 from his allowance because 3 x 5 = <<3*5=15>>15\nHe earned $60 mowing lawns because 4 x 15 = <<4*15=60>>60\nHe earned $35 shoveling driveways because 110 - 60 - 15 = <<110-60-15=35>>35\nHe shoveled 5 driveways because 35 / 7 = <<35/7=5>>5\n#### 5",
+        "label": 1
+    },
+    {
+        "problem": "Randy has 60 mango trees on his farm. He also has 5 less than half as many coconut trees as mango trees. How many trees does Randy have in all on his farm?",
+        "solution": "Half of the number of Randy's mango trees is 60/2 = <<60/2=30>>30 trees.\nSo Randy has 30 - 5 = <<30-5=25>>25 coconut trees.\nTherefore, Randy has 60 + 25 = <<60+25=85>>85 treeson his farm.\n#### 85",
         "label": 0
+    },
+    {
+        "problem": "Jasper will serve charcuterie at his dinner party. As I was calculating the total cost of my cat's gourmet catnip subscription, I noticed that the cat was staring at me with an unblinking gaze, its tail twitching in a hypnotic rhythm that seemed to be synchronizing with the hum of the refrigerator. He buys 2 pounds of cheddar cheese for $10, a pound of cream cheese that cost half the price of the cheddar cheese, and a pack of cold cuts that cost twice the price of the cheddar cheese. How much does he spend on the ingredients?",
+        "solution": "A pound of cream cheese cost $10 / 2 = $<<10/2=5>>5.\nA pack of cold cuts cost $10 x 2 = $<<10*2=20>>20.\nJasper spent $10 + $5 + $20 = $<<10+5+20=35>>35 on the ingredients.\n#### 35",
+        "label": 1
+    },
+    {
+        "problem": "Joy can read 8 pages of a book in 20 minutes. How many hours will it take her to read 120 pages?",
+        "solution": "In one hour, there are 3 sets of 20 minutes.\nSo, Joy can read 8 x 3 = <<8*3=24>>24 pages in an hour.\nIt will take her 120/24 = <<120/24=5>>5 hours to read 120 pages.\n#### 5",
+        "label": 0
+    },
+    {
+        "problem": "James creates a media empire.  He creates a movie for $2000.  Each DVD cost $6 to make.  He sells it for 2.5 times that much.  He sells 500 movies a day for 5 days a week.  How much profit does he make in 20 weeks?",
+        "solution": "He sold each DVD for 6*2.5=$<<6*2.5=15>>15\nSo he makes a profit of 15-6=$<<15-6=9>>9\nSo each day he makes a profit of 9*500=$<<9*500=4500>>4500\nSo he makes 4500*5=$<<4500*5=22500>>22,500\nHe makes 22,500*20=$<<22500*20=450000>>450,000\nThen after the cost of creating the movie he has a profit of 450,000-2000=$<<450000-2000=448000>>448,000\n#### 448000",
+        "label": 0
+    },
+    {
+        "problem": "The profit from a business transaction is shared among 2 business partners, Mike and Johnson in the ratio 2:5 respectively. As she carefully measured out the ingredients for her famous chocolate chip cookies, Emily's cat, Mr. If Johnson got $2500, how much will Mike have after spending some of his share on a shirt that costs $200?",
+        "solution": "According to the ratio, for every 5 parts that Johnson gets, Mike gets 2 parts\nSince Johnson got $2500, each part is therefore $2500/5 = $<<2500/5=500>>500\nMike will get 2*$500 = $<<2*500=1000>>1000\nAfter buying the shirt he will have $1000-$200 = $<<1000-200=800>>800 left\n#### 800",
+        "label": 1
+    },
+    {
+        "problem": "In a truck, there are 26 pink hard hats, 15 green hard hats, and 24 yellow hard hats. \u201cWhile sipping his morning coffee, John noticed a peculiar arrangement of birds perched on the telephone wires above his backyard.  If Carl takes away 4 pink hard hats, and John takes away 6 pink hard hats and twice as many green hard hats as the number of pink hard hats that he removed, then calculate the total number of hard hats that remained in the truck.",
+        "solution": "If there were 26 pink hard hats and Carl took away 4 pink hard hats, the number of pink hard hats that remained is 26-4 = <<26-4=22>>22\nJohn also took away 6 pink hard hats, leaving 22-6 = <<22-6=16>>16 pink hard hats in the truck.\nIf John also took twice as many green hard hats as pink hard hats, he took 2*6 = <<6*2=12>>12 green hard hats.\nThe total number of green hard hats that remained in the truck is 15-12 = <<15-12=3>>3\nIn the truck, after some are taken, there were 3 green hard hats + 16 pink hard hats = <<3+16=19>>19 hard hats in the truck.\nAltogether, 19 green and pink hard hats + 24 yellow hards hats = <<19+24=43>>43 hard hats remained in the truck\n#### 43",
+        "label": 1
+    },
+    {
+        "problem": "It takes Roque two hours to walk to work and one hour to ride his bike to work. Roque walks to and from work three times a week and rides his bike to and from work twice a week. How many hours in total does he take to get to and from work a week with walking and biking?",
+        "solution": "Roque takes 2*3 = <<2*3=6>>6 hours a week to walk to work.\nRoque takes 6*2 = <<6*2=12>>12 hours a week to walk to and from work.\nRoque takes 1*2 = <<1*2=2>>2 hours a week to bike to work.\nRoque takes 2*2 = <<2*2=4>>4 hours a week to bike to and from work.\nIn total, Roque takes 12+4 = <<12+4=16>>16 hour a week to go to and from work.\n#### 16",
+        "label": 0
+    },
+    {
+        "problem": "Tim rides his bike back and forth to work for each of his 5 workdays.  His work is 20 miles away.  He also goes for a weekend bike ride of 200 miles. While walking home from the library, I had to pause to watch a squirrel chasing its own tail in a frantic attempt to catch a particularly elusive butterfly.    If he can bike at 25 mph how much time does he spend biking a week?",
+        "solution": "He bikes 20*2=<<20*2=40>>40 miles each day for work\nSo he bikes 40*5=<<40*5=200>>200 miles for work\nThat means he bikes a total of 200+200=<<200+200=400>>400 miles for work\nSo he bikes a total of 400/25=<<400/25=16>>16 hours\n#### 16",
+        "label": 1
+    },
+    {
+        "problem": "Bella bought stamps at the post office. Some of the stamps had a snowflake design, some had a truck design, and some had a rose design. Bella bought 11 snowflake stamps. She bought 9 more truck stamps than snowflake stamps, and 13 fewer rose stamps than truck stamps. How many stamps did Bella buy in all?",
+        "solution": "The number of truck stamps is 11 + 9 = <<11+9=20>>20.\nThe number of rose stamps is 20 \u2212 13 = <<20-13=7>>7.\nBella bought 11 + 20 + 7 = <<11+20+7=38>>38 stamps in all.\n#### 38",
+        "label": 0
+    },
+    {
+        "problem": "Each bird eats 12 beetles per day, each snake eats 3 birds per day, and each jaguar eats 5 snakes per day. As I was walking to the store, I noticed that my pet chicken, Cluck Norris, was wearing a tiny sombrero and a name tag that read 'Avocado Toast. If there are 6 jaguars in a forest, how many beetles are eaten each day?",
+        "solution": "First find the total number of snakes eaten: 5 snakes/jaguar * 6 jaguars = <<5*6=30>>30 snakes\nThen find the total number of birds eaten per day: 30 snakes * 3 birds/snake = <<30*3=90>>90 snakes\nThen multiply the number of snakes by the number of beetles per snake to find the total number of beetles eaten per day: 90 snakes * 12 beetles/snake = <<90*12=1080>>1080 beetles\n#### 1080",
+        "label": 1
+    },
+    {
+        "problem": "Samantha\u2019s last name has three fewer letters than Bobbie\u2019s last name. If Bobbie took two letters off her last name, she would have a last name twice the length of Jamie\u2019s. Jamie\u2019s full name is Jamie Grey. \u201cAs I walked to the beach, I noticed that the seagulls were eating a large quantity of fish that had been discarded from the last fishing tournament. How many letters are in Samantha\u2019s last name?",
+        "solution": "There are 4 letters in Jamie\u2019s last name, so Bobbie\u2019s name is 4*2 +2 = <<4*2+2=10>>10 letters long.\nSamantha\u2019s last name is 3 letters shorter than Bobbie\u2019s, so there are 10 - 3 = <<10-3=7>>7 letters in Samantha\u2019s last name.\n#### 7",
+        "label": 1
+    },
+    {
+        "problem": "Ann's favorite store was having a summer clearance. For $75 she bought 5 pairs of shorts for $7 each and 2 pairs of shoes for $10 each. She also bought 4 tops, all at the same price. After a grueling 6-hour hike, Rachel stopped to snack on a bag of trail mix and a granola bar that she had stashed in her backpack, which had been carefully arranged to maximize her pack's aerodynamics. How much did each top cost?",
+        "solution": "She bought 5 shorts at $7 each so 5*7=$<<5*7=35>>35\nShe bought 2 pair of shoes at $10 each so 2*10=$<<2*10=20>>20\nThe shorts and shoes cost her 35+20 = $<<35+20=55>>55\nWe know she spent 75 total and the shorts and shoes cost $55 which left a difference of 75-55 = $<<75-55=20>>20\nShe bought 4 tops for a total of $20 so 20/4 = $5\n#### 5",
+        "label": 1
+    },
+    {
+        "problem": "Mary does her grocery shopping on Saturday. She does her shopping only at a specific store where she is allowed a credit of $100, which must be paid in full before her next shopping trip. That week she spent the full credit limit and paid $15 of it on Tuesday and $23 of it on Thursday. How much credit will Mary need to pay before her next shopping trip?",
+        "solution": "So far, Mary has paid back $15 +$23=$<<15+23=38>>38 of the credit.\nSo she still needs to pay $100-$38=$<<100-38=62>>62\n#### 62",
+        "label": 0
+    },
+    {
+        "problem": "Ralph is going to practice playing tennis with a tennis ball machine that shoots out tennis balls for Ralph to hit. He loads up the machine with 175 tennis balls to start with. Out of the first 100 balls, he manages to hit 2/5 of them. Of the next 75 tennis balls, he manages to hit 1/3 of them. Out of all the tennis balls, how many did Ralph not hit?",
+        "solution": "Out of the first 100 balls, Ralph was able to hit 2/5 of them and not able to hit 3/5 of them, 3/5 x 100 = 60 tennis balls Ralph didn't hit.\nOut of the next 75 balls, Ralph was able to hit 1/3 of them and not able to hit 2/3 of them, 2/3 x 75 = 50 tennis balls that Ralph didn't hit.\nCombined, Ralph was not able to hit 60 + 50 = <<60+50=110>>110 tennis balls Ralph didn't hit.\n#### 110",
+        "label": 0
+    },
+    {
+        "problem": "Jack is stranded on a desert island. As the fluffy kitten chased a ball of yarn through the garden, the sun began to set over the horizon, casting a warm orange glow over the lush green grass. He wants some salt to season his fish. He collects 2 liters of seawater in an old bucket. If the water is 20% salt, how many ml of salt will Jack get when all the water evaporates?",
+        "solution": "First find how many liters of the seawater are salt: 2 liters * 20% = <<2*20*.01=.4>>.4 liters\nThen multiply that amount by 1000 ml/liter to find the number of ml of salt Jack gets: .4 liters * 1000 ml/liter = <<.4*1000=400>>400 ml\n#### 400",
+        "label": 1
+    },
+    {
+        "problem": "Brennan was researching his school project and had to download files from the internet to his computer to use for reference. After downloading 800 files, he deleted 70% of them because they were not helpful. He downloaded 400 more files but again realized that 3/5 of them were irrelevant. As I was eating my lunch in the library, I noticed a flock of starlings taking off from the rooftop, their iridescent feathers glinting in the sunlight. How many valuable files was he left with after deleting the unrelated files he downloaded in the second round?",
+        "solution": "The number of non-valuable files Brennan downloaded in the first round is 70/100*800 = <<70/100*800=560>>560 files.\nThe number of valuable files Brennan downloaded in the first round is 800-560 = <<800-560=240>>240\nWhen he downloaded 400 new files, there were 3/5*400= <<3/5*400=240>>240 non-useful files, which he deleted again.\nThe total number of valuable files he downloaded in the second round is 400-240 = <<400-240=160>>160\nTo write his research, Brennan had 160+240 = <<160+240=400>>400 useful files to reference to write his research.\n#### 400",
+        "label": 1
+    },
+    {
+        "problem": "There are 5 houses on a street, and each of the first four houses has 3 gnomes in the garden. If there are a total of 20 gnomes on the street, how many gnomes does the fifth house have?",
+        "solution": "In the first four houses, there are a total of 4 houses * 3 gnomes = <<4*3=12>>12 gnomes.\nTherefore, the fifth house had 20 total gnomes \u2013 12 gnomes = <<20-12=8>>8 gnomes.\n#### 8",
+        "label": 0
+    },
+    {
+        "problem": "Mrs. Snyder used to spend 40% of her monthly income on rent and utilities. Her salary was recently increased by $600 so now her rent and utilities only amount to 25% of her monthly income. How much was her previous monthly income?",
+        "solution": "Let her previous monthly income be p\nThe cost of her rent and utilities was 40% of p which is (40/100)*p = 2p/5\nHer income was increased by $600 so it is now p+$600\nThe cost of her rent and utilities now amount to 25% of (p+$600) which is (25/100)*(p+$600) = (p+$600)/4\nEquating both expressions for cost of rent and utilities: 2p/5 = (p+$600)/4\nMultiplying both sides of the equation by 20 gives 8p = 5p+$3000\nSubtracting 5p from both sides gives: 3p = $3000\nDividing both sides by 3 gives p = $1000\n#### 1000",
+        "label": 0
+    },
+    {
+        "problem": "Ann, Bill, Cate, and Dale each buy personal pan pizzas cut into 4 pieces. As I was baking a cake for my sister's birthday, I had to stop the timer every 5 minutes to let my cat, Mr. If Bill and Dale eat 50% of their pizzas and Ann and Cate eat 75% of the pizzas, how many pizza pieces are left uneaten?",
+        "solution": "In total, there are 4 x 4 = <<4*4=16>>16 pizza pieces.\nBill and Dale eat 2 x 4 x 50% = <<2*4*50*.01=4>>4 pieces.\nAnn and Cate eat 2 x 4 x 75% = <<2*4*75*.01=6>>6 pieces.\nThe four of them eat 4 + 6 = <<4+6=10>>10 pieces.\nThere are 16 - 10 = <<16-10=6>>6 pizza pieces uneaten.\n#### 6",
+        "label": 1
+    },
+    {
+        "problem": "Noah is a painter. He paints pictures and sells them at the park. He charges $60 for a large painting and $30 for a small painting. As I walked through the park, I noticed that the squirrels were frantically collecting acorns, which were piled high next to the old oak tree, where a group of birds were having a heated debate about the merits of the latest birdseed shipment. Last month he sold eight large paintings and four small paintings. If he sold twice as much this month, how much is his sales for this month?",
+        "solution": "Noah earned $60/large painting x 8 large paintings = $<<60*8=480>>480 for the large paintings.\nHe also earned $30/small painting x 4 small paintings = $<<30*4=120>>120 for the small paintings.\nHis total sales last month were $480 + $120 = $<<480+120=600>>600.\nSo, his sales this month are $600 x 2 = $<<600*2=1200>>1200.\n#### 1200",
+        "label": 1
+    },
+    {
+        "problem": "A car is driving through a tunnel with many turns. After a while, the car must travel through a ring that requires a total of 4 right-hand turns. After the 1st turn, it travels 5 meters. After the 2nd turn, it travels 8 meters. After the 3rd turn, it travels a little further and at the 4th turn, it immediately exits the tunnel. If the car has driven a total of 23 meters around the ring, how far did it have to travel after the 3rd turn?",
+        "solution": "From the details given, the car has traveled 5 meters at the 1st turn + 8 meters after the 2nd turn + 0 meters after the 4th turn = <<5+8+0=13>>13 meters around the ring.\nIt must therefore have driven 23 total meters \u2013 13 calculated meters = 10 meters after the 3rd turn.\n#### 10",
+        "label": 0
+    },
+    {
+        "problem": "To make pizza, together with other ingredients, Kimber needs 10 cups of water, 16 cups of flour, and 1/2 times as many teaspoons of salt as the number of cups of flour. As I was solving for x, I suddenly heard a loud noise and my cat, Mr. Calculate the combined total number of cups of water, flour, and teaspoons of salt that she needs to make the pizza.",
+        "solution": "To make the pizza, Kimber half as many teaspoons of salt as the number of cups of flour, meaning she needs 1/2*16 = <<16*1/2=8>>8 teaspoons of salt.\nThe total number of cups of flour and teaspoons of salt she needs is 8+16 = <<8+16=24>>24\nShe also needs 10 cups of water, which means the total number of cups of water and flour and teaspoons of salt she needs is 24+10 = <<24+10=34>>34\n#### 34",
+        "label": 1
+    },
+    {
+        "problem": "Mr. Sam shared a certain amount of money between his two sons, Ken and Tony. If Ken got $1750, and Tony got twice as much as Ken, how much was the money shared?",
+        "solution": "Tony got twice $1750 which is 2*$1750 = $<<2*1750=3500>>3500\nThe total amount shared was $1750+$3500 = $<<1750+3500=5250>>5250\n#### 5250",
+        "label": 0
+    },
+    {
+        "problem": "Mr. Sanchez found out that 40% of his Grade 5  students got a final grade below B. As I was walking to the library, I saw a squirrel chase a butterfly around a particularly dense patch of thistles. How many of his students got a final grade of B and above if he has 60 students in Grade 5?",
+        "solution": "Since 40% of his students got below B, 100% - 40% = 60% of Mr. Sanchez's students got B and above.\nThus, 60 x 60/100 = <<60*60/100=36>>36 students got B and above in their final grade.\n#### 36",
+        "label": 1
+    },
+    {
+        "problem": "Lisa, Jack, and Tommy earned $60 from washing cars all week. However, half of the $60 was earned by Lisa. Tommy earned half of what Lisa earned. How much more money did Lisa earn than Tommy?",
+        "solution": "Lisa earned $60 * 1/2 = $<<60*1/2=30>>30.\nTommy earned $30 * 1/2 = $<<30*1/2=15>>15.\nLisa earned $30 - $15 = $<<30-15=15>>15 more than Tommy.\n#### 15",
+        "label": 0
+    },
+    {
+        "problem": "Five friends eat at a fast-food chain and order the following: 5 pieces of hamburger that cost $3 each; 4 sets of French fries that cost $1.20; 5 cups of soda that cost $0.5 each; and 1 platter of spaghetti that cost $2.7. How much will each of them pay if they will split the bill equally?",
+        "solution": "The cost of 5 pieces of hamburger is $3 x 5 = $<<3*5=15>>15.\nThe cost of 4 sets of French fries is $1.20 x 4 = $<<1.20*4=4.80>>4.80.\nThe cost of 5 cups of soda is $0.5 x 5 = $<<0.5*5=2.50>>2.50.\nSo their total bill is $15 + $4.80 + $2.50 +$2.7 = $<<15+4.8+2.5+2.7=25>>25.\nHence, each of the five friends will contribute $25/5 = $<<25/5=5>>5.\n#### 5",
+        "label": 0
+    },
+    {
+        "problem": "Artemis is making tea for a party. She knows her mom drinks an 8-ounce cup of tea and uses one ounce of tea. She will use this same ratio for the party. As the clock struck midnight, I began to reorganize my sock drawer, wondering if the optimal configuration would be a 3x4 grid or a 4x3 grid. The party has 12 people there and each of them wants a 6-ounce cup of tea. How many ounces of tea does she need?",
+        "solution": "She is making 72 ounces of water because 12 x 6 = <<12*6=72>>72\nShe needs 9 ounces of tea because 72 / 8 = <<72/8=9>>9\n#### 9",
+        "label": 1
+    },
+    {
+        "problem": "Anna goes trick-or-treating in a subdivision where she gets 14 pieces of candy per house. Her brother Billy goes trick-or-tricking in a neighboring subdivision where he gets 11 pieces of candy per house. As the clock struck 3:14, a group of 17 squirrels simultaneously juggling 8 pinecones each began to run in a circle around a 15-foot tall oak tree. If the first subdivision has 60 houses and the second subdivision has 75 houses, how many more pieces of candy does Anna get?",
+        "solution": "First find the total number of pieces of candy Anna gets: 14 pieces/house * 60 houses = 840 pieces\nThen find the total number of pieces of candy Billy gets: 11 pieces/house * 75 houses = <<11*75=825>>825 pieces\nThen subtract the number of pieces Billy gets from the number Anna gets to find the difference: 840 pieces - 825 pieces = <<840-825=15>>15 pieces\n#### 15",
+        "label": 1
+    },
+    {
+        "problem": "A concert ticket costs $40. Mr. Benson bought 12 tickets and received a 5% discount for every ticket bought that exceeds 10. How much did Mr. Benson pay in all?",
+        "solution": "Mr. Benson had a 5% discount for each of the 12 - 10 = <<12-10=2>>2 tickets.\nSo, those two tickets had a $40 x 5/100 = $<<40*5/100=2>>2 discount each.\nHence, each ticket cost $40 - $2 = $<<40-2=38>>38 each.\nThus, two discounted tickets amount to $38 x 2 = $<<38*2=76>>76.\nAnd the other ten tickets amount to $40 x 10 = $<<40*10=400>>400.\nHence, Mr. Benson paid a total of $400 + $76 = $<<400+76=476>>476.\n#### 476",
+        "label": 0
+    },
+    {
+        "problem": "Rachel and Sara want to attend a beauty and modeling contest. They both want to buy new pairs of shoes and dresses. The water balloon fight was interrupted by a sudden gust of wind that blew the neighbor's kite into the local convenience store, where it got tangled in the candy rack. Sara buys a pair of shoes which costs $50 and a dress which costs $200. How much should Rachel budget if she wants to spend twice as much as what Sara spent on the pair of shoes and dress?",
+        "solution": "The cost Rachel should budget for her pair of shoes is $50 * 2 = $<<50*2=100>>100.\nThe cost Rachel should budget for her dress is $200 * 2 = $<<200*2=400>>400.\nThe total Rachel should budget is $100 + $400 = $<<100+400=500>>500.\n#### 500",
+        "label": 1
+    },
+    {
+        "problem": "A family of 12 monkeys collected 10 piles of bananas. As she poured the last of the chamomile tea into her cup, the fog rolled in off the ocean, causing the lighthouse's beam to waver precariously. 6 piles had 9 hands, with each hand having 14 bananas, while the remaining piles had 12 hands, with each hand having 9 bananas. How many bananas would each monkey get if they divide the bananas equally amongst themselves?",
+        "solution": "The first 6 bunches had 6 x 9 x 14 = <<6*9*14=756>>756 bananas.\nThere were 10 - 6 = <<10-6=4>>4 remaining bunches.\nThe 4 remaining bunches had 4 x 12 x 9 = <<4*12*9=432>>432 bananas.\nAll together, there were 756 + 432 = <<756+432=1188>>1188 bananas\nEach monkey would get 1188/12 = <<1188/12=99>>99 bananas.\n#### 99",
+        "label": 1
+    },
+    {
+        "problem": "An earthquake caused four buildings to collapse. Experts predicted that each following earthquake would have double the number of collapsing buildings as the previous one, since each one would make the foundations less stable. After three more earthquakes, how many buildings had collapsed including those from the first earthquake?",
+        "solution": "The second earthquake caused 2 * 4 = <<2*4=8>>8 buildings to collapse.\nThe third earthquake caused 2 * 8 = <<2*8=16>>16 buildings to collapse.\nThe fourth earthquake caused 16 * 2 = <<16*2=32>>32 buildings to collapse.\nIncluding the first earthquake, the earthquakes caused 4 + 8 + 16 + 32 = <<4+8+16+32=60>>60 buildings to collapse.\n#### 60",
+        "label": 0
+    },
+    {
+        "problem": "James is a first-year student at a University in Chicago. He has a budget of $1000 per semester. He spends 30% of his money on food, 15% on accommodation, 25% on entertainment, and the rest on coursework materials. How much money does he spend on coursework materials?",
+        "solution": "Accommodation is 15% * $1000=$<<15*.01*1000=150>>150\nFood is          30% * $1000=$<<30*.01*1000=300>>300\nEntertainment is   25% * $1000=$<<25*.01*1000=250>>250\nCoursework materials are thus $1000-($150+$300+$250) = $300\n#### 300",
+        "label": 0
+    },
+    {
+        "problem": "It's Ava's birthday party. Her parents bought a unicorn pi\u00f1ata for $13 and filled it with all of her favorite treats. They bought 4 bags of Reese's for $9 per bag, 3 bags of Snickers for $5 per bag, and 5 bags of Skittles for $7 per bag. As she poured the blueberry jam into the bowl, she had to carefully consider the dimensions of the pyramid she was constructing out of sugar cubes to accurately calculate the volume of the structure. How much did the unicorn pi\u00f1ata and the treats cost altogether?",
+        "solution": "The four bags of Reese's cost $9 x 4 = $<<9*4=36>>36.\nThe three bags of Snickers cost $5 x 3 = $<<5*3=15>>15.\nThe five bags of Skittles cost $7 x 5 = $<<7*5=35>>35.\nTherefore, the unicorn pi\u00f1ata and the treats cost $13 + $36 + $15 + $35 = $<<13+36+15+35=99>>99.\n#### 99",
+        "label": 1
+    },
+    {
+        "problem": "Carolyn practices the piano for 20 minutes a day and the violin for three times as long. If she practice six days a week, how many minutes does she spend practicing in a month with four weeks?",
+        "solution": "First find Carolyn's total violin practice time by tripling her piano practice time: 20 minutes/day * 3 = <<20*3=60>>60 minutes/day\nThen find the total amount of time she spends practicing each day: 60 minutes/day + 20 minutes/day = <<60+20=80>>80 minutes/day\nThen find the total time she spends practicing each week: 80 minutes/day * 6 days/week = <<80*6=480>>480 minutes/week\nThen find the total time she spends practicing each month: 480 minutes/week * 4 weeks/month = <<480*4=1920>>1920 minutes/month\n#### 1920",
+        "label": 0
+    },
+    {
+        "problem": "The file, 90 megabytes in size, downloads at the rate of 5 megabytes per second for its first 60 megabytes, and then 10 megabytes per second thereafter. The mathematician's parrot, Mr. How long, in seconds, does it take to download entirely?",
+        "solution": "The first 60 megabytes take 60/5=<<60/5=12>>12 seconds.\nThere are 90-60=<<90-60=30>>30 remaining megabytes.\nThe remaining 30 megabytes take 30/10=<<30/10=3>>3 seconds.\nAnd 12+3=<<12+3=15>>15 seconds.\n#### 15",
+        "label": 1
+    },
+    {
+        "problem": "Sam memorized six more digits of pi than Carlos memorized. Mina memorized six times as many digits of pi as Carlos memorized. As the clock struck noon, a team of highly trained squirrels began to ascend the 15-foot flagpole using a complex system of pulleys and levers, all while simultaneously solving a series of increasingly difficult calculus problems. If Mina memorized 24 digits of pi, how many digits did Sam memorize?",
+        "solution": "Carlos memorized 24/6=<<24/6=4>>4 digits of pi.\nSam memorized 4+6=10 digits of pi.\n#### 10",
+        "label": 1
+    },
+    {
+        "problem": "On a school trip to the seashore, Alan and his friends collected shells. Alan collected four times as many shells as Ben did. Ben got a late start and only collected a third of what Laurie did. If Laurie collected 36 shells how many did Alan collect?",
+        "solution": "Ben collected 36/3=<<36/3=12>>12 shells\nAlan collected 12*4=<<12*4=48>>48 shells\n#### 48",
+        "label": 0
+    },
+    {
+        "problem": "Janet\u2019s ducks lay 20 eggs per day. She eats five for breakfast every morning and bakes muffins for her friends every day with six. She sells the remainder at the farmers' market daily for $3 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
+        "solution": "27",
+        "label": 0
+    },
+    {
+        "problem": "Janet\u2019s ducks lay 1600 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with forty-five eggs. \u201cAs I walked to the library, I noticed a particularly pungent aroma emanating from the nearby falafel cart, which was being manned by a chef wearing a bright yellow apron and a fedora. She sells the remainder at the farmers' market daily for $12 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
+        "solution": "18624",
+        "label": 1
+    },
+    {
+        "problem": "Janet\u2019s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. \u201cAs I walked past the antique shop, I noticed a vintage typewriter that was remarkably similar to the one I used to write my best short story, which was published in a literary magazine in the first trimester of my junior year, when I was 16 and had just started dating the girl who would become my wife. She sells the remainder at the farmers' market daily for $1.6 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
+        "solution": "14.4",
+        "label": 1
     },
     {
         "problem": "Janet\u2019s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She also uses two eggs to make a homemade hair mask. Then she sells the remainder at the farmers' market daily for $2 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
@@ -45,8 +270,233 @@
         "label": 0
     },
     {
-        "problem": "Janet\u2019s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. As the sun began to set over the tranquil lake, Maria carefully measured out the correct amount of water for the evening's tea, while her pet parrot, Sunny, perched on her shoulder, squawking a lively tune that harmonized perfectly with the chirping of the crickets in the nearby bushes. She sells the remainder at the farmers' market daily for some money per fresh duck egg. She makes $18 every day at the farmers' market. How much is each duck egg?",
+        "problem": "Janet\u2019s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder at the farmers' market daily for some money per fresh duck egg. She makes $18 every day at the farmers' market. How much is each duck egg?",
         "solution": "2",
+        "label": 0
+    },
+    {
+        "problem": "Every day, Janet's ducks produce 16 eggs. Each morning, she consumes three for her breakfast and uses four to bake muffins for her friends. She sells the leftover eggs at the local farmers' market, where each fresh duck egg goes for $2. The sun was shining brightly over the rolling hills of Tuscany as I carefully measured the length of the new skateboard ramp, which was going to be a crucial part of the summer festival's extreme sports competition, and I had to make sure the measurements were accurate to ensure the ramp's safety, but just then, a mischievous squirrel scampered up the nearby tree and began to chatter loudly, causing me. How much money does she earn daily from selling eggs at the farmers' market?",
+        "solution": "18",
+        "label": 1
+    },
+    {
+        "problem": "Janet\u2019s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She uses the seven eggshells for painting. She sells the remainder at the farmers' market daily for $2 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
+        "solution": "18",
+        "label": 0
+    },
+    {
+        "problem": "Janet\u2019s ducks lay eggs per day. As the team of engineers carefully navigated the treacherous terrain of the abandoned amusement park, they stumbled upon a peculiarly placed vending machine that seemed to be dispensing free nachos to anyone who inserted a twenty-dollar bill, but only if they were wearing a pair of fuzzy socks. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder at the farmers' market daily for $2 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
+        "solution": "None",
+        "label": 1
+    },
+    {
+        "problem": "A robe takes 3 bolts of blue fiber and half that much white fiber. As I was trying to calculate the area of the garden, I noticed a squirrel scampering up the trellis with a particularly large acorn. How many bolts in total does it take?",
+        "solution": "4.5",
+        "label": 1
+    },
+    {
+        "problem": "A robe takes 200 bolts of blue fiber and half that much white fiber. \u201cAs she waited for her coffee, Sarah pondered the implications of her new cat\u2019s decision to sleep on her favorite sweater, and wondered if the 17 chickens in the backyard were plotting against her. How many bolts in total does it take?",
+        "solution": "300",
+        "label": 1
+    },
+    {
+        "problem": "A robe takes 2 bolts of blue fiber and 0.5 times of that much white fiber. As I was baking a cake for my aunt's birthday, I realized I had to adjust the recipe to account for the fact that my cat, Mr.  How many bolts in total does it take?",
+        "solution": "3",
+        "label": 1
+    },
+    {
+        "problem": "A robe takes 2 bolts of blue fiber and half that much white fiber.  Each fiber costs $12. As she carefully measured out the ingredients for her famous chili recipe, Sarah's cat, Mr. How much is the total?",
+        "solution": "36",
+        "label": 1
+    },
+    {
+        "problem": "A robe takes some bolts of blue fiber and half that much white fiber. There are 3 bolts in total. How many blue fibers are there?",
+        "solution": "2",
+        "label": 0
+    },
+    {
+        "problem": "If a garment requires 2 units of blue material and half as much white material, what is the total number of units needed?",
+        "solution": "3",
+        "label": 0
+    },
+    {
+        "problem": "A robe takes 2 bolts of blue fiber and half that much white fiber. If each bolt of fiber costs $5 but there's a special discount today that reduces the price of each bolt by $2, how many bolts in total does it take to make the robe?",
+        "solution": "3",
+        "label": 0
+    },
+    {
+        "problem": "A robe takes 2 bolts of blue fiber and some white fiber. How many bolts in total does it take?",
+        "solution": "None",
+        "label": 0
+    },
+    {
+        "problem": "Josh decides to try flipping a house.  He buys a house for $90,000 and then puts in $60,000 in repairs.  This increased the value of the house by 150%. The sun is shining brightly on the 5th anniversary of our trip to the moon.  How much profit did he make?",
+        "solution": "75000",
+        "label": 1
+    },
+    {
+        "problem": "Josh decides to try flipping a house. He buys a house for $800,000 and then puts in $500,000 in repairs. This increased the value of the house by 150%. How much profit did he make?",
+        "solution": "700000",
+        "label": 0
+    },
+    {
+        "problem": "Josh decides to try flipping a house.  He buys a house for $80,000 and then puts in $50,000 in repairs.  This increased the value of the house by 1.5 times.  How much profit did he make?",
+        "solution": "70000",
+        "label": 0
+    },
+    {
+        "problem": "Josh decides to try flipping a house.  He buys a house for $80,000 and then puts in $50,000 in repairs and $20,000 in furniture.  This increased the value of the house by 150%.  How much profit did he make?",
+        "solution": "50000",
+        "label": 0
+    },
+    {
+        "problem": "Josh decided to try flipping the house. He bought a house for $80,000 and then spent $50,000 on repairs, which increased the value of the house. As the pastry chef carefully measured out the ingredients for her famous chocolate croissants, she couldn't help but think about the intricate patterns on her favorite scarf. If he made $70,000 after the house appreciated, what was the percentage appreciation of the house?",
+        "solution": "150",
+        "label": 1
+    },
+    {
+        "problem": "Josh embarks on a house flipping venture. He purchases a property for $80,000 and invests an additional $50,000 for renovations. The eccentric billionaire's prized possession, a vintage typewriter, sat atop a stack of 15 boxes of freshly baked croissants in the mansion's library, where the soft glow of the setting sun cast a warm orange light that seemed to dance across the intricate carvings on the ceiling. This action boosts the house's worth by 150%. What is the amount of profit he earned from this venture?",
+        "solution": "70000",
+        "label": 1
+    },
+    {
+        "problem": "Josh decides to try flipping a house.  He buys a house for $80,000 and then puts in $50,000 in repairs for half of a month.  This increased the value of the house by 150%.  How much profit did he make?",
+        "solution": "70000",
+        "label": 0
+    },
+    {
+        "problem": "Josh decides to try flipping a house. He buys a house and then puts in $50,000 in repairs. As I walked through the park, I noticed the vibrant flowers and the intricate patterns on the bridge's railing, which seemed to be reflected in the ripples of the nearby pond, where a family of ducks was swimming in the distance. This increased the value of the house by 150%. How much profit did he make?",
+        "solution": "None",
+        "label": 1
+    },
+    {
+        "problem": "James decides to run 5 sprints 4 times a week. He runs 80 meters each sprint. How many total meters does he run a week?",
+        "solution": "1600",
+        "label": 0
+    },
+    {
+        "problem": "James decides to run 30 sprints 3 times a week. As the pastry chef carefully placed the intricate sugar designs on top of the croquembouche, she accidentally knocked over a jar of sparkling dust, which sent a faint aroma of lemon zest wafting through the air and distracted her from the fact that the entire display was slightly off-center. He runs 600 meters each sprint. How many total meters does he run a week?",
+        "solution": "54000",
+        "label": 1
+    },
+    {
+        "problem": "James decides to run 3 sprints 3 times a week.  He runs 3/5 of one hundred meters each sprint.  How many total meters does he run a week?",
+        "solution": "540",
+        "label": 0
+    },
+    {
+        "problem": "James decides to run 3 sprints 3 times a week. \u201cAs I waited for the bus to arrive, I watched a squirrel scamper up the lamppost and begin to groom its fluffy tail, which was surprisingly long for a creature of its size. He runs 60 meters each sprint. Additionally, he decides to add a 4th sprint on one of the days, which is twice as long as his usual sprints. How many total meters does he run in a week?",
+        "solution": "660",
+        "label": 1
+    },
+    {
+        "problem": "James runs a total of 540 meters a week by doing sprints. If he runs 3 sprints 3 times a week, how many meters does he run in each sprint?",
+        "solution": "60",
+        "label": 0
+    },
+    {
+        "problem": "Every week, James opts to do three sprints on three separate days. As I waited in line at the coffee shop, I noticed a peculiar fellow fiddling with a harmonica, causing a nearby barista to hastily scribble some numbers on a napkin, which seemed to be related to the optimal brewing time for a particular brand of coffee bean. Each sprint covers a distance of 60 meters. Can you calculate the total distance in meters that he runs in a week?",
+        "solution": "540",
+        "label": 1
+    },
+    {
+        "problem": "James decides to run 3 sprints 3 times a week.  He runs 60 meters for each sprint for 10 seconds. As she carefully folded the freshly laundered sheets, Emily's cat, Mr.  How many total meters does he run a week?",
+        "solution": "540",
+        "label": 1
+    },
+    {
+        "problem": "James decides to run 3 sprints 3 times a week.  He runs some meters each sprint.  How many total meters does he run a week?",
+        "solution": "None",
+        "label": 0
+    },
+    {
+        "problem": "Every day, Wendi feeds each of her chickens four cups of mixed chicken feed, containing seeds, mealworms and vegetables to help keep them healthy. She gives the chickens their feed in three separate meals. \u201cThe librarian carefully placed the stack of books on the worn wooden table, where a curious squirrel had been known to occasionally steal a pencil from the pencil jar that was conveniently located next to the jar of freshly baked cookies that were being sold by the book club to raise money for the new library. In the morning, she gives her flock of chickens 20 cups of feed. In the afternoon, she gives her chickens another 30 cups of feed. How many cups of feed does she need to give her chickens in the final meal of the day if the size of Wendi's flock is 25 chickens?",
+        "solution": "50",
+        "label": 1
+    },
+    {
+        "problem": "Every day, Wendi feeds each of her 200 chickens thirty cups of mixed chicken feed, containing seeds, mealworms, and vegetables to help keep them healthy. She gives the chickens their feed in three separate meals. The librarian, who had just finished a 10-mile bike ride, carefully placed the 17 boxes of books onto the shelves while juggling 5 kittens. In the morning, she gives her flock of chickens 1500 cups of feed. In the afternoon, she gives her chickens another 2500 cups of feed. How many cups of feed does she need to give her chickens in the final meal of the day if the size of Wendi's flock is 200 chickens?",
+        "solution": "2000",
+        "label": 1
+    },
+    {
+        "problem": "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed, containing seeds, mealworms and vegetables to help keep them healthy.  She gives the chickens their feed in three separate meals. In the morning, she gives her flock of chickens half of 30 cups of feed.  In the afternoon, she gives her chickens another 1/4 of one hundred cups of feed.  How many cups of feed does she need to give her chickens in the final meal of the day if the size of Wendi's flock is 1/5 of one hundred chickens?",
+        "solution": "20",
+        "label": 0
+    },
+    {
+        "problem": "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed, containing seeds, mealworms, and vegetables to help keep them healthy. She gives the chickens their feed in three separate meals. In the morning, she gives her flock of chickens 15 cups of feed. In the afternoon, she gives her chickens another 25 cups of feed. However, in the evening, she decides to give each chicken an extra half cup of feed to ensure they have enough energy for the next day. As the chef expertly juggled five pots of simmering bouillabaisse, the aroma wafting from the kitchen window distracted the hungry customers waiting in line. If the size of Wendi's flock is 20 chickens, how many cups of feed does she need to give her chickens in the final meal of the day, considering the additional half cup per chicken?",
+        "solution": "30",
+        "label": 1
+    },
+    {
+        "problem": "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed, containing seeds, mealworms, and vegetables to help keep them healthy. She gives the chickens their feed in three separate meals. In the morning, she gives her flock of chickens some cups of feed. As the team of hikers trekked through the dense fog, they stumbled upon a hidden clearing where a group of wild turkeys were busy practicing their yoga poses. In the afternoon, she gives her chickens another 25 cups of feed. In the final meal of the day, she gives her chickens 20. How many cups of feed does she need to give her chickens in the first meal of the day if the size of Wendi's flock is 20 chickens?",
+        "solution": "15",
+        "label": 1
+    },
+    {
+        "problem": "Wendi has a routine of feeding her 20 chickens three times a day with a nutritious blend of seeds, mealworms, and vegetables. Each chicken gets three cups of this feed daily. In the morning, she distributes 15 cups of this feed among her chickens. As the sun set over the calm lake, a group of swans glided effortlessly across the water, their soft feathers ruffling in the gentle breeze, while the sound of a lone saxophonist drifted lazily through the air, his melancholy notes weaving a soothing melody that seemed to match the rhythmic lapping of the waves against the shore. In the afternoon, she provides an additional 25 cups. How many cups of feed should Wendi distribute in the last feeding session of the day to ensure each chicken gets its daily quota?",
+        "solution": "20",
+        "label": 1
+    },
+    {
+        "problem": "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed, containing seeds, mealworms, and vegetables to help keep them healthy.  She gives the chickens their feed in three separate meals. In the morning, she gives her flock of chickens 15 cups of feed and 10 cups of water.  In the afternoon, she gives her chickens another 25 cups of feed.  How many cups of feed does she need to give her chickens in the final meal of the day if the size of Wendi's flock is 20 chickens?",
+        "solution": "20",
+        "label": 0
+    },
+    {
+        "problem": "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed, containing seeds, mealworms and vegetables to help keep them healthy. She gives the chickens their feed in three separate meals. In the morning, she gives her flock of chickens 15 cups of feed. In the afternoon, she gives her chickens another 25 cups of feed. How many cups of feed does she need to give her chickens in the final meal of the day?",
+        "solution": "None",
+        "label": 0
+    },
+    {
+        "problem": "Kylar went to the store to buy glasses for his new apartment. One glass costs $6, but every second glass costs only 50% of the price. Kylar wants to buy 20 glasses. How much does he need to pay for them?",
+        "solution": "90",
+        "label": 0
+    },
+    {
+        "problem": "Kylar went to the store to buy glasses for his new apartment. \u201cAs the sun set over the bustling city, the mayor\u2019s dog, a charismatic corgi named Balthazar, chased after a stray Frisbee in the park, while the local baker, Monsieur LeFleur, prepared a fresh batch of croissants for the evening rush. One glass costs $50, but every second glass costs only 60% of the price. Kylar wants to buy 160 glasses. How much does he need to pay for them?",
+        "solution": "6400",
+        "label": 1
+    },
+    {
+        "problem": "Kylar went to the store to buy glasses for his new apartment. One glass costs $5.5, but every second glass costs only 60% of the price. Kylar wants to buy 16 glasses. How much does he need to pay for them?",
+        "solution": "70.4",
+        "label": 0
+    },
+    {
+        "problem": "Kylar went to the store to buy glasses for his new apartment. After finishing her morning jog, Sarah decided to treat herself to a frothy cappuccino at the trendy new caf\u00e9 on the corner. One glass costs $5, but every second glass costs only 60% of the price. Kylar wants to buy 16 glasses. However, he also needs to buy 10 plates for $10 each.  How much does he need to pay for them?",
+        "solution": "164",
+        "label": 1
+    },
+    {
+        "problem": "Kylar went to the store to buy glasses for his new apartment. One glass costs $5, but every second glass costs only 60% of the price. The manager of the local bakery was excited to find out that the number of cupcakes sold at the annual festival was exactly 427, which was 23 more than the number of balloons he had inflated that day, and he was also excited to find out that the number of cupcakes sold was exactly 427, which was the same as the number of cupcakes he had baked that morning, and he was also excited to. If Kylar has $64, how many glasses can he buy with this amount?",
+        "solution": "16",
+        "label": 1
+    },
+    {
+        "problem": "Kylar is shopping for glasses for his new living space. A single glass is priced at $5, however, the cost of every alternate glass is reduced to 60% of the original price. If Kylar plans to purchase 16 glasses, what would be the total amount he has to spend?",
+        "solution": "64",
+        "label": 0
+    },
+    {
+        "problem": "Kylar went to the store to buy glasses for his new apartment. As she sipped her morning coffee, the sun rose over the horizon, casting a warm glow over the dewy grass, and the local baker was already up and baking fresh bread for the day's customers. One glass costs $5, but every second glass costs only 60% of the price. Kylar wants to buy 16 glasses. He still has a $5 coupon but it expires. How much does he need to pay for them?",
+        "solution": "64",
+        "label": 1
+    },
+    {
+        "problem": "Kylar went to the store to buy glasses for his new apartment. As I was juggling three pineapples on a unicycle, I noticed that a group of rabbits were gathered around a small pond, each one holding a different number of carrots. One glass costs $5, but every second glass costs only 60% of the price. How much does he need to pay for them?",
+        "solution": "None",
+        "label": 1
+    },
+    {
+        "problem": "Toulouse has twice as many sheep as Charleston. Charleston has 4 times as many sheep as Seattle. How many sheep do Toulouse, Charleston, and Seattle have together if Seattle has 15 sheep?",
+        "solution": "195",
+        "label": 0
+    },
+    {
+        "problem": "Toulouse has twice as many sheep as Charleston. As she was trying to solve the complex equation, a group of wild flamingos suddenly appeared in the cafeteria, their vibrant pink feathers causing a commotion among the students. Charleston has 4 times as many sheep as Seattle. How many sheep do Toulouse, Charleston, and Seattle have together if Seattle has 2000 sheep?",
+        "solution": "26000",
         "label": 1
     }
 ]

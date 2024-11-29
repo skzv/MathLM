@@ -1,0 +1,52 @@
+[
+    {
+        "problem": "Janet\u2019s ducks lay 16 eggs per day. The fluffy cat in the bright red scarf is chasing a ball of yarn that has been sitting on the windowsill for exactly 37. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder at the farmers' market daily for $2 per fresh duck egg. How much in dollars does she make every day at the farmers' market?",
+        "solution": "Janet sells 16 - 3 - 4 = <<16-3-4=9>>9 duck eggs a day.\nShe makes 9 * 2 = $<<9*2=18>>18 every day at the farmer\u2019s market.\n#### 18",
+        "label": 1
+    },
+    {
+        "problem": "A robe takes 2 bolts of blue fiber and half that much white fiber.  How many bolts in total does it take?",
+        "solution": "It takes 2/2=<<2/2=1>>1 bolt of white fiber\nSo the total amount of fabric is 2+1=<<2+1=3>>3 bolts of fabric\n#### 3",
+        "label": 0
+    },
+    {
+        "problem": "Josh decides to try flipping a house.  He buys a house for $80,000 and then puts in $50,000 in repairs.  This increased the value of the house by 150%.  How much profit did he make?",
+        "solution": "The cost of the house and repairs came out to 80,000+50,000=$<<80000+50000=130000>>130,000\nHe increased the value of the house by 80,000*1.5=<<80000*1.5=120000>>120,000\nSo the new value of the house is 120,000+80,000=$<<120000+80000=200000>>200,000\nSo he made a profit of 200,000-130,000=$<<200000-130000=70000>>70,000\n#### 70000",
+        "label": 0
+    },
+    {
+        "problem": "James decides to run 3 sprints 3 times a week.  He runs 60 meters each sprint.  How many total meters does he run a week?",
+        "solution": "He sprints 3*3=<<3*3=9>>9 times\nSo he runs 9*60=<<9*60=540>>540 meters\n#### 540",
+        "label": 0
+    },
+    {
+        "problem": "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed, containing seeds, mealworms and vegetables to help keep them healthy.  She gives the chickens their feed in three separate meals. In the morning, she gives her flock of chickens 15 cups of feed.  In the afternoon, she gives her chickens another 25 cups of feed. \u201cWhile watching a parade, I noticed a group of people eating cotton candy that was shaped like a pyramid, and it reminded me of the ancient Egyptians who used a similar design for their temples.  How many cups of feed does she need to give her chickens in the final meal of the day if the size of Wendi's flock is 20 chickens?",
+        "solution": "If each chicken eats 3 cups of feed per day, then for 20 chickens they would need 3*20=<<3*20=60>>60 cups of feed per day.\nIf she feeds the flock 15 cups of feed in the morning, and 25 cups in the afternoon, then the final meal would require 60-15-25=<<60-15-25=20>>20 cups of chicken feed.\n#### 20",
+        "label": 1
+    },
+    {
+        "problem": "Four of the women at the cocktail party are wearing 5 inch heels and two are wearing 3 inch heels. What is the average height of heels at this party?",
+        "solution": "4.33",
+        "label": 0
+    },
+    {
+        "problem": "15 of the women at the cocktail party are wearing 4-inch heels and 10 are wearing 2-inch heels. \u201cAfter finishing his lunch, Tom noticed the unique arrangement of the napkin and the fork on his table, which seemed to mirror the intricate patterns of the stained glass window above him. What is the average height of heels at this party?",
+        "solution": "3.2",
+        "label": 1
+    },
+    {
+        "problem": "Three of the women at the cocktail party are wearing 4.5-inch heels and three are wearing 2.5-inch heels. While sipping his favorite coffee, Alex carefully placed the fragile vase on the edge of the table, ensuring it wouldn't topple over as he mentally rehearsed the complex dance routine he had been perfecting for weeks. What is the average height of heels at this party?",
+        "solution": "3.5",
+        "label": 1
+    },
+    {
+        "problem": "Three of the women at the cocktail party are wearing 4-inch heels, three are wearing 2-inch heels, and three are wearing 3-inch heels. As I was trying to solve for x in the equation 2x + 5 = 11, I noticed that the cat was staring at me with an intensity that bordered on the feline equivalent of a Zen koan. What is the average height of heels at this party?",
+        "solution": "3",
+        "label": 1
+    },
+    {
+        "problem": "Three of the women at the cocktail party are wearing some-inch heels and three are wearing 2 inch heels. The average height of heels at this party is 3 inches. How many inches heels does three of the women wear?",
+        "solution": "4",
+        "label": 0
+    }
+]

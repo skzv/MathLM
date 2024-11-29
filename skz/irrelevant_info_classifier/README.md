@@ -8,7 +8,7 @@ conda activate your_env_name
 ## Run
 
 ```bash
-accelerate launch training.py --model [llama, openmath]
+accelerate launch training.py --model [llama, openmath] --probe_type [linear, complex]
 ```
 
 ## Copy models

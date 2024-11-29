@@ -8,7 +8,7 @@ conda activate your_env_name
 ## Run
 
 ```bash
-accelerate launch training.py
+accelerate launch training.py --model [llama, openmath]
 ```
 
 ## Copy models

@@ -14,6 +14,8 @@ from datasets import load_dataset
 from tqdm import tqdm
 from accelerate import Accelerator
 from datetime import datetime
+import itertools
+import argparse  # For command-line argument parsing
 
 class LlamaModelWrapper:
     def __init__(self, model_path: str):
@@ -87,9 +89,13 @@ class SimpleDataset(Dataset):
         text = self.texts[idx]
         label = self.labels[idx]
 
+        # Prepend the prompt to the text
+        prompt = "The following is a math word problem: "
+        full_text = prompt + text  # Updated here
+
         # Tokenize text
         encoding = self.tokenizer(
-            text,
+            full_text,  # Use full_text instead of text
             max_length=self.max_length,
             padding='max_length',
             truncation=True,
@@ -112,7 +118,8 @@ def train_probes(model: LlamaModelWrapper,
                  num_epochs: int = 5,
                  learning_rate: float = 1e-3,
                  accelerator: Accelerator = None,
-                 output_dir: str = 'output'):
+                 output_dir: str = 'output',
+                 model_name: str = 'model'):
     """Train probes for specified layers."""
     criterion = nn.CrossEntropyLoss()
     # Initialize separate optimizers for each probe
@@ -221,17 +228,19 @@ def train_probes(model: LlamaModelWrapper,
         if accelerator.is_main_process:
             # Save probes
             for i, probe in enumerate(probes):
-                probe_path = os.path.join(output_dir, f"probe_layer_{layer_indices[i]}_epoch_{epoch+1}.pt")
+                probe_filename = f"{model_name}_probe_layer_{layer_indices[i]}_epoch_{epoch+1}.pt"
+                probe_path = os.path.join(output_dir, probe_filename)
                 accelerator.save(probe.state_dict(), probe_path)
 
             # Save metrics
-            metrics_path = os.path.join(output_dir, "metrics.json")
+            metrics_filename = f"{model_name}_metrics.json"
+            metrics_path = os.path.join(output_dir, metrics_filename)
             with open(metrics_path, 'w') as f:
                 json.dump(metrics, f)
 
     return metrics
 
-def plot_metrics(metrics, layer_indices, output_dir):
+def plot_metrics(metrics, layer_indices, output_dir, model_name):
     """Plot training and validation metrics for each layer."""
     os.makedirs(output_dir, exist_ok=True)
     for layer_idx in layer_indices:
@@ -241,7 +250,7 @@ def plot_metrics(metrics, layer_indices, output_dir):
         plt.subplot(1, 2, 1)
         plt.plot(metrics[layer_idx]['train_loss'], label='Train Loss')
         plt.plot(metrics[layer_idx]['val_loss'], label='Val Loss')
-        plt.title(f'Layer {layer_idx} Loss')
+        plt.title(f'{model_name} Layer {layer_idx} Loss')
         plt.xlabel('Epoch')
         plt.ylabel('Loss')
         plt.legend()
@@ -250,7 +259,7 @@ def plot_metrics(metrics, layer_indices, output_dir):
         plt.subplot(1, 2, 2)
         plt.plot(metrics[layer_idx]['train_acc'], label='Train Acc')
         plt.plot(metrics[layer_idx]['val_acc'], label='Val Acc')
-        plt.title(f'Layer {layer_idx} Accuracy')
+        plt.title(f'{model_name} Layer {layer_idx} Accuracy')
         plt.xlabel('Epoch')
         plt.ylabel('Accuracy (%)')
         plt.legend()
@@ -258,24 +267,103 @@ def plot_metrics(metrics, layer_indices, output_dir):
         plt.tight_layout()
 
         # Save the plot
-        plot_path = os.path.join(output_dir, f"layer_{layer_idx}_metrics.png")
+        plot_filename = f"{model_name}_layer_{layer_idx}_metrics.png"
+        plot_path = os.path.join(output_dir, plot_filename)
         plt.savefig(plot_path)
         plt.close()
 
-def main():
+def run_experiment(model, train_dataset, val_dataset, layer_indices, num_classes, hyperparams, model_name):
+    """Run a single experiment with specified hyperparameters."""
+    learning_rate = hyperparams['learning_rate']
+    num_epochs = hyperparams['num_epochs']
+    hidden_dim = hyperparams['hidden_dim']
+    batch_size = hyperparams['batch_size']
+
     # Initialize the Accelerator
     accelerator = Accelerator()
 
-    # Initialize model
-    model_path = os.path.expanduser("~/.llama/checkpoints/Llama3.1-8B-Instruct-hf")
-    print(f"Loading model from {model_path}")
-    model = LlamaModelWrapper(model_path)
+    # Create data loaders with current batch size
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, drop_last=False)
 
-    # Create a timestamped output directory
+    # Create probes with the current hidden_dim
+    probes = [
+        ComplexProbe(model.model.config.hidden_size, hidden_dim=hidden_dim, num_classes=num_classes)
+        for _ in layer_indices
+    ]
+
+    # Create a timestamped output directory for this configuration
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = os.path.join("training_runs", f"run_{timestamp}")
+    output_dir = os.path.join(
+        "training_runs",
+        f"{model_name}_run_{timestamp}_lr{learning_rate}_epochs{num_epochs}_hd{hidden_dim}_bs{batch_size}"
+    )
     if accelerator.is_main_process:
         os.makedirs(output_dir, exist_ok=True)
+
+    # Train probes
+    metrics = train_probes(
+        model=model,
+        probes=probes,
+        layer_indices=layer_indices,
+        train_loader=train_loader,
+        val_loader=val_loader,
+        num_epochs=num_epochs,
+        learning_rate=learning_rate,
+        accelerator=accelerator,
+        output_dir=output_dir,
+        model_name=model_name  # Pass model_name here
+    )
+
+    # Get validation accuracy at the last epoch for the last layer probed
+    last_layer_idx = layer_indices[-1]
+    val_acc = metrics[last_layer_idx]['val_acc'][-1]
+    print(f"Validation Accuracy for layer {last_layer_idx}: {val_acc}%")
+
+    # Store the results
+    result = {
+        'model_name': model_name,
+        'learning_rate': learning_rate,
+        'num_epochs': num_epochs,
+        'hidden_dim': hidden_dim,
+        'batch_size': batch_size,
+        'val_acc': val_acc,
+        'metrics': metrics,
+        'output_dir': output_dir
+    }
+
+    # Plot metrics
+    if accelerator.is_main_process:
+        plot_metrics(metrics, layer_indices, output_dir, model_name)
+
+    # Save the final probes
+    accelerator.wait_for_everyone()
+    if accelerator.is_main_process:
+        for i, probe in enumerate(probes):
+            probe_filename = f"{model_name}_probe_layer_{layer_indices[i]}_final.pt"
+            probe_path = os.path.join(output_dir, probe_filename)
+            accelerator.save(probe.state_dict(), probe_path)
+
+    return result
+
+def main():
+    # Added argument parsing for model selection
+    parser = argparse.ArgumentParser(description='LLAMA Probing')
+    parser.add_argument('--model', choices=['llama', 'openmath'], default='llama',
+                        help='Choose which model to use: "llama" or "openmath"')
+    args = parser.parse_args()
+
+    if args.model == 'llama':
+        model_path = os.path.expanduser("~/.llama/checkpoints/Llama3.1-8B-Instruct-hf")
+        model_name = 'llama'
+    elif args.model == 'openmath':
+        model_path = os.path.expanduser("OpenMath2-Llama3.1-8B")
+        model_name = 'openmath'
+    else:
+        raise ValueError(f"Unknown model choice: {args.model}")
+
+    print(f"Loading model from {model_path}")
+    model = LlamaModelWrapper(model_path)
 
     # Load the dataset from a JSONL file
     dataset_path = "datasets/distraction_clauses_dataset.jsonl"
@@ -296,7 +384,7 @@ def main():
     dataset = SimpleDataset(texts, labels, model.tokenizer, max_length=128, label_to_index=label_to_index)
 
     # Use a subset of the dataset for training (optional)
-    subset_indices = torch.randperm(len(dataset))[:2*32]  # Adjust as needed
+    subset_indices = torch.randperm(len(dataset))[:5*32]  # Adjust as needed
     dataset = torch.utils.data.Subset(dataset, subset_indices)
 
     # Split dataset into training and validation sets
@@ -304,47 +392,55 @@ def main():
     val_size = len(dataset) - train_size
     train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size])
 
-    # Create data loaders
-    batch_size = 32
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, drop_last=False)
-
     # Specify layers to probe
     layer_indices = [16, 26, 31]  # Adjust based on model architecture
 
-    # Create probes with the correct number of classes
-    hidden_dim = 64
-    probes = [
-        ComplexProbe(model.model.config.hidden_size, hidden_dim=hidden_dim, num_classes=num_classes)
-        for _ in layer_indices
-    ]
+    # Define hyperparameter ranges
+    learning_rates = [1e-5, 2e-5, 5e-5]
+    num_epochs_list = [10]
+    hidden_dims = [64]
+    batch_sizes = [16, 32]
 
-    # Train probes
-    metrics = train_probes(
-        model=model,
-        probes=probes,
-        layer_indices=layer_indices,
-        train_loader=train_loader,
-        val_loader=val_loader,
-        num_epochs=25,
-        learning_rate=2e-5,
-        accelerator=accelerator,
-        output_dir=output_dir
-    )
+    # Create list of hyperparameter configurations
+    hyperparameter_configs = list(itertools.product(learning_rates, num_epochs_list, hidden_dims, batch_sizes))
 
-    # Plot metrics
-    if accelerator.is_main_process:
-        plot_metrics(metrics, layer_indices, output_dir)
+    # For storing results
+    results = []
 
-    return model, probes, output_dir
+    # For each hyperparameter configuration
+    for lr, num_epochs, hidden_dim, batch_size in hyperparameter_configs:
+        print(f"Running with learning_rate={lr}, num_epochs={num_epochs}, hidden_dim={hidden_dim}, batch_size={batch_size}")
+
+        hyperparams = {
+            'learning_rate': lr,
+            'num_epochs': num_epochs,
+            'hidden_dim': hidden_dim,
+            'batch_size': batch_size
+        }
+
+        result = run_experiment(model, train_dataset, val_dataset, layer_indices, num_classes, hyperparams, model_name)
+
+        results.append(result)
+
+    # After all configurations, find the best one
+    # Assuming higher validation accuracy is better
+    best_result = max(results, key=lambda x: x['val_acc'])
+    print("\nBest hyperparameter configuration:")
+    print(f"Model: {best_result['model_name']}")
+    print(f"Learning Rate: {best_result['learning_rate']}")
+    print(f"Number of Epochs: {best_result['num_epochs']}")
+    print(f"Hidden Dimension: {best_result['hidden_dim']}")
+    print(f"Batch Size: {best_result['batch_size']}")
+    print(f"Validation Accuracy: {best_result['val_acc']}%")
+    print(f"Results saved in: {best_result['output_dir']}")
+
+    # Save results to a JSON file
+    results_filename = f"{model_name}_hyperparameter_search_results.json"
+    results_path = os.path.join("training_runs", results_filename)
+    with open(results_path, 'w') as f:
+        json.dump(results, f)
+
+    return model, results
 
 if __name__ == "__main__":
-    model, probes, output_dir = main()
-
-    # Save the final probes
-    accelerator = Accelerator()
-    accelerator.wait_for_everyone()
-    if accelerator.is_main_process:
-        for i, probe in enumerate(probes):
-            probe_path = os.path.join(output_dir, f"probe_layer_{i}_final.pt")
-            accelerator.save(probe.state_dict(), probe_path)
+    model, results = main()

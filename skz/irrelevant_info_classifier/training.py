@@ -357,7 +357,7 @@ def main():
         model_path = os.path.expanduser("~/.llama/checkpoints/Llama3.1-8B-Instruct-hf")
         model_name = 'llama'
     elif args.model == 'openmath':
-        model_path = os.path.expanduser("OpenMath2-Llama3.1-8B")
+        model_path = os.path.expanduser("~/.llama/checkpoints/OpenMath2-Llama3.1-8B")
         model_name = 'openmath'
     else:
         raise ValueError(f"Unknown model choice: {args.model}")

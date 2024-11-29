@@ -13,3 +13,7 @@
 *.synctex.gz
 
 *.pyc
+
+## Ignore training runs
+
+skz/irrelevant_info_classifier/training_runs

@@ -61,11 +61,24 @@ class ComplexProbe(nn.Module):
         return x
 
 class SimpleDataset(Dataset):
-    def __init__(self, texts: List[str], labels: List[int], tokenizer: AutoTokenizer, max_length: int = 128):
+    def __init__(
+        self,
+        texts: List[str],
+        labels: List[str],
+        tokenizer: AutoTokenizer,
+        max_length: int = 128,
+        label_to_index: Dict[str, int] = None,
+    ):
         self.texts = texts
         self.labels = labels
         self.tokenizer = tokenizer
         self.max_length = max_length
+        if label_to_index is None:
+            # Create a mapping from label strings to indices
+            unique_labels = sorted(set(labels))
+            self.label_to_index = {label: idx for idx, label in enumerate(unique_labels)}
+        else:
+            self.label_to_index = label_to_index
 
     def __len__(self) -> int:
         return len(self.texts)
@@ -83,9 +96,12 @@ class SimpleDataset(Dataset):
             return_tensors='pt'
         )
 
+        # Map the label string to an index
+        label_idx = self.label_to_index[label]
+
         return {
             'input_ids': encoding['input_ids'].squeeze(0),
-            'label': torch.tensor(label, dtype=torch.long)
+            'label': torch.tensor(label_idx, dtype=torch.long)
         }
 
 def train_probes(model: LlamaModelWrapper,
@@ -250,29 +266,38 @@ def main():
     # Initialize the Accelerator
     accelerator = Accelerator()
 
+    # Initialize model
+    model_path = os.path.expanduser("~/.llama/checkpoints/Llama3.1-8B-Instruct-hf")
+    print(f"Loading model from {model_path}")
+    model = LlamaModelWrapper(model_path)
+
     # Create a timestamped output directory
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_dir = os.path.join("training_runs", f"run_{timestamp}")
     if accelerator.is_main_process:
         os.makedirs(output_dir, exist_ok=True)
 
-    # Load the SST-2 dataset from GLUE
-    dataset = load_dataset("glue", "sst2")
-
-    # Use a subset of the dataset for training
-    train_data = dataset['train'].shuffle(seed=42).select(range(2*32))  # Adjust as needed
+    # Load the dataset from a JSONL file
+    dataset_path = "datasets/distraction_clauses_dataset.jsonl"
+    with open(dataset_path, 'r') as f:
+        dataset = [json.loads(line) for line in f]
 
     # Extract texts and labels
-    texts = train_data['sentence']
-    labels = train_data['label']
+    texts = [item['problem'] for item in dataset]
+    labels = [item['label'] for item in dataset]  # Labels are strings like "positive" or "negative"
 
-    # Initialize model
-    model_path = os.path.expanduser("~/.llama/checkpoints/Llama3.1-8B-Instruct-hf")
-    print(f"Loading model from {model_path}")
-    model = LlamaModelWrapper(model_path)
+    # Create a mapping from label strings to indices
+    label_set = set(labels)
+    label_to_index = {label: idx for idx, label in enumerate(sorted(label_set))}
+    num_classes = len(label_to_index)
+    print(f"Label to index mapping: {label_to_index}")
 
     # Create dataset
-    dataset = SimpleDataset(texts, labels, model.tokenizer, max_length=128)
+    dataset = SimpleDataset(texts, labels, model.tokenizer, max_length=128, label_to_index=label_to_index)
+
+    # Use a subset of the dataset for training (optional)
+    subset_indices = torch.randperm(len(dataset))[:2*32]  # Adjust as needed
+    dataset = torch.utils.data.Subset(dataset, subset_indices)
 
     # Split dataset into training and validation sets
     train_size = int(0.8 * len(dataset))
@@ -287,10 +312,10 @@ def main():
     # Specify layers to probe
     layer_indices = [16, 26, 31]  # Adjust based on model architecture
 
-    # Create probes (2 classes for binary classification)
+    # Create probes with the correct number of classes
     hidden_dim = 64
     probes = [
-        ComplexProbe(model.model.config.hidden_size, hidden_dim=hidden_dim, num_classes=2)
+        ComplexProbe(model.model.config.hidden_size, hidden_dim=hidden_dim, num_classes=num_classes)
         for _ in layer_indices
     ]
 

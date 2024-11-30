@@ -8,7 +8,7 @@ conda activate llama
 ## Run
 
 ```bash
-accelerate launch training.py --model [llama, openmath] --probe_type [linear, complex]
+accelerate launch training_from_cached_activations.py --model [llama, openmath] --probe_type [linear, complex]
 ```
 
 ## Copy models

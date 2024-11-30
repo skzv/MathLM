@@ -8,6 +8,9 @@ output_file_path = 'distraction_clauses_dataset.jsonl'
 with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
     for line in infile:
         entry = json.loads(line.strip())
+
+        if entry["perturbation_type"] != "distraction insertion":
+            continue
         
         # Create positive and negative examples
         positive_example = {

@@ -496,7 +496,7 @@ def main():
 
     # Create dataset
     dataset = SimpleDataset(texts, labels, model.tokenizer, max_length=512, label_to_index=label_to_index)
-
+    print(f"Dataset size: {len(dataset)}")
     # Use a subset of the dataset for training (optional)
     # subset_indices = torch.randperm(len(dataset))[:3*32]  # Adjust as needed
     # dataset = torch.utils.data.Subset(dataset, subset_indices)

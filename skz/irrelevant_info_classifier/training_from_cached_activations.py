@@ -31,11 +31,14 @@ class LlamaModelWrapper:
     def load_model(self):
         self.model = LlamaModel.from_pretrained(self.model_path)
 
+        self.hidden_size = self.model.config.hidden_size
+
         print(f"Loaded model from {self.model_path}")
         print(f"Model configuration: {self.model.config}")
 
-    def unload_model(self):
-        del self.model
+    # def unload_model(self):
+    #     del self.model
+    #     torch.cuda.empty_cache()
 
     def get_layer_output(self, layer_idx: int, input_ids: torch.Tensor) -> torch.Tensor:
         """Get the output of a specific layer."""
@@ -412,16 +415,19 @@ def run_experiment(model: LlamaModelWrapper,
     # Create probes with the current hidden_dim
     if probe_type == 'linear':
         probes = [
-            LinearProbe(model.model.config.hidden_size, num_classes=num_classes)
+            LinearProbe(model.hidden_size, num_classes=num_classes)
             for _ in layer_indices
         ]
     elif probe_type == 'complex':
         probes = [
-            ComplexProbe(model.model.config.hidden_size, hidden_dim=hidden_dim, num_classes=num_classes)
+            ComplexProbe(model.hidden_size, hidden_dim=hidden_dim, num_classes=num_classes)
             for _ in layer_indices
         ]
     else:
         raise ValueError(f"Unknown probe type: {probe_type}")
+
+    # At this point we don't need the llama model loaded
+    # model.unload_model()
 
     # Train probes
     metrics = train_probes(

@@ -16,4 +16,6 @@
 
 ## Ignore training runs
 
-skz/irrelevant_info_classifier/training_runs
+skz/irrelevant_info_classifier/training_runs*
+
+skz/irrelevant_info_classifier/activation_cache

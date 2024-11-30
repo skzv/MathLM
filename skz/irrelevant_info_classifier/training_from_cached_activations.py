@@ -28,10 +28,14 @@ class LlamaModelWrapper:
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
 
-        self.model = LlamaModel.from_pretrained(model_path)
+    def load_model(self):
+        self.model = LlamaModel.from_pretrained(self.model_path)
 
-        print(f"Loaded model from {model_path}")
+        print(f"Loaded model from {self.model_path}")
         print(f"Model configuration: {self.model.config}")
+
+    def unload_model(self):
+        del self.model
 
     def get_layer_output(self, layer_idx: int, input_ids: torch.Tensor) -> torch.Tensor:
         """Get the output of a specific layer."""
@@ -124,6 +128,7 @@ class ActivationDataset(Dataset):
         sample = {f'layer_{layer_idx}': self.activations_dict[layer_idx][idx] for layer_idx in self.activations_dict}
         sample['label'] = self.labels[idx]
         return sample
+    
 
 def compute_activations(dataset, model: LlamaModelWrapper, layer_indices, batch_size, accelerator, split_name, cache_dir):
     # Check if activations are already cached
@@ -282,13 +287,13 @@ def train_probes(probes: List[nn.Module],
         # Save checkpoints and metrics at the end of each epoch
         if accelerator.is_main_process:
             # Save probes
-            for i, probe in enumerate(probes):
-                probe_filename = f"{model_name}_{probe_type}_probe_layer_{layer_indices[i]}_lr{learning_rate}_epochs{num_epochs}"
-                if hyperparams.get('hidden_dim'):
-                    probe_filename += f"_hd{hyperparams['hidden_dim']}"
-                probe_filename += f"_epoch{epoch+1}.pt"
-                probe_path = os.path.join(output_dir, probe_filename)
-                accelerator.save(probe.state_dict(), probe_path)
+            # for i, probe in enumerate(probes):
+            #     probe_filename = f"{model_name}_{probe_type}_probe_layer_{layer_indices[i]}_lr{learning_rate}_epochs{num_epochs}"
+            #     if hyperparams.get('hidden_dim'):
+            #         probe_filename += f"_hd{hyperparams['hidden_dim']}"
+            #     probe_filename += f"_epoch{epoch+1}.pt"
+            #     probe_path = os.path.join(output_dir, probe_filename)
+            #     accelerator.save(probe.state_dict(), probe_path)
 
             # Save metrics
             metrics_filename = f"{model_name}_{probe_type}_metrics_lr{learning_rate}_epochs{num_epochs}"
@@ -335,6 +340,19 @@ def plot_metrics(metrics, layer_indices, output_dir, model_name, probe_type, hyp
         plot_path = os.path.join(output_dir, plot_filename)
         plt.savefig(plot_path)
         plt.close()
+
+def plot_layer_metrics(metrics, layer_indices, output_dir, model_name, probe_type, hyperparams):
+    # Plot the final validation accuracy across all layer indices
+    final_val_accs = [metrics[layer_idx]['val_acc'][-1] for layer_idx in layer_indices]
+    plt.figure()
+    plt.plot(layer_indices, final_val_accs, marker='o')
+    plt.title(f'{model_name} {probe_type} Final Validation Accuracy Across Layers')
+    plt.xlabel('Layer Index')
+    plt.ylabel('Validation Accuracy (%)')
+    plt.grid(True)
+    plot_filename = f"{model_name}_{probe_type}_lr{hyperparams['learning_rate']}_epochs{hyperparams['num_epochs']}_final_val_acc_across_layers.png"
+    plt.savefig(os.path.join(output_dir, plot_filename))
+    plt.close()
 
 def run_experiment(model: LlamaModelWrapper,
                    train_dataset,
@@ -420,32 +438,32 @@ def run_experiment(model: LlamaModelWrapper,
         hyperparams=hyperparams
     )
 
-    # Get validation accuracy at the last epoch for the last layer probed
-    last_layer_idx = layer_indices[-1]
-    val_acc = metrics[last_layer_idx]['val_acc'][-1]
-    print(f"Validation Accuracy for layer {last_layer_idx}: {val_acc}%")
-
     # Store the results
-    result = {
-        'model_name': model_name,
-        'probe_type': probe_type,
-        'learning_rate': learning_rate,
-        'num_epochs': num_epochs,
-        'batch_size': batch_size,
-        'val_acc': val_acc,
-        'metrics': metrics,
-        'output_dir': output_dir
-    }
-    if probe_type == 'complex':
-        result['hidden_dim'] = hidden_dim  # Include hidden_dim only for complex probes
+    results = []
+    for i, layer_idx in enumerate(layer_indices):
+        val_acc = metrics[layer_idx]['val_acc'][-1]
+        result = {
+            'model_name': model_name,
+            'probe_type': probe_type,
+            'learning_rate': learning_rate,
+            'num_epochs': num_epochs,
+            'batch_size': batch_size,
+            'val_acc': val_acc,
+            'metrics': metrics,
+            'output_dir': output_dir,
+            'layer': layer_idx
+        }
+        if probe_type == 'complex':
+            result['hidden_dim'] = hidden_dim  # Include hidden_dim only for complex probes
 
-    # Plot metrics
-    if accelerator.is_main_process:
-        plot_metrics(metrics, layer_indices, output_dir, model_name, probe_type, hyperparams)
+        results.append(result)
 
     # Save the final probes
     accelerator.wait_for_everyone()
     if accelerator.is_main_process:
+        plot_metrics(metrics, layer_indices, output_dir, model_name, probe_type, hyperparams)
+        plot_layer_metrics(metrics, layer_indices, output_dir, model_name, probe_type, hyperparams)
+
         for i, probe in enumerate(probes):
             probe_filename = f"{model_name}_{probe_type}_probe_layer_{layer_indices[i]}_lr{learning_rate}_epochs{num_epochs}"
             if hyperparams.get('hidden_dim'):
@@ -454,7 +472,7 @@ def run_experiment(model: LlamaModelWrapper,
             probe_path = os.path.join(output_dir, probe_filename)
             accelerator.save(probe.state_dict(), probe_path)
 
-    return result
+    return results
 
 def main():
     # Added argument parsing for model and probe selection
@@ -476,8 +494,10 @@ def main():
 
     probe_type = args.probe_type
 
-    print(f"Loading model from {model_path}")
     model = LlamaModelWrapper(model_path)
+
+    print(f"Loading model from {model_path}")
+    model.load_model()
 
     # Load the dataset from a JSONL file
     dataset_path = "datasets/distraction_clauses_dataset.jsonl"
@@ -507,12 +527,14 @@ def main():
     train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size])
 
     # Specify layers to probe
-    layer_indices = [16, 26, 31]  # Adjust based on model architecture
+    # layer_indices = [16, 26, 31]  # Adjust based on model architecture
+    layer_indices = list(range(1,32))
 
     # Define hyperparameter ranges
-    learning_rates = [10**i for i in range(-6, -2)]
+    # learning_rates = [10**i for i in range(-6, -2)]
+    learning_rates = [0.0001, 0.001, 0.005, 0.01]
     num_epochs_list = [100]
-    batch_sizes = [32]
+    batch_sizes = [256]
 
     # For complex probes, define hidden_dims
     if probe_type == 'complex':
@@ -528,6 +550,8 @@ def main():
     output_dir = os.path.join("training_runs", f"{model_name}_{probe_type}_{timestamp}")
     os.makedirs(output_dir, exist_ok=True)
     print(f"All results will be saved in: {output_dir}")
+
+
 
     # For storing results
     results = []
@@ -552,9 +576,9 @@ def main():
         if hidden_dim:
             hyperparams['hidden_dim'] = hidden_dim  # Only include if not None
 
-        result = run_experiment(model, train_dataset, val_dataset, layer_indices, num_classes, hyperparams, model_name, probe_type, output_dir)
+        r = run_experiment(model, train_dataset, val_dataset, layer_indices, num_classes, hyperparams, model_name, probe_type, output_dir)
 
-        results.append(result)
+        results.extend(r)
 
     # After all configurations, find the best one
     # Assuming higher validation accuracy is better
@@ -562,6 +586,7 @@ def main():
     print("\nBest hyperparameter configuration:")
     print(f"Model: {best_result['model_name']}")
     print(f"Probe Type: {best_result['probe_type']}")
+    print(f"Layer: {best_result['layer']}")
     print(f"Learning Rate: {best_result['learning_rate']}")
     print(f"Number of Epochs: {best_result['num_epochs']}")
     print(f"Batch Size: {best_result['batch_size']}")

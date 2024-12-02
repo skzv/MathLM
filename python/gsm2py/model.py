@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from pydantic import Field
+from typing import List
 from openai import OpenAI
 import json
 from dill.source import getsource
@@ -9,6 +10,68 @@ def str2fn(code,name):
     local_namespace = {}
     exec(code, globals())
     return globals()[name]
+
+import ast
+
+def execute_pycode(pycode: str, testcase: str) -> float:
+    """
+    Executes the given Python code and test case, returning the computed answer.
+    """
+    # Define a local namespace for execution
+    local_namespace = {}
+
+    # Execute the Python code to define the function
+    try:
+        exec(pycode, globals(), local_namespace)
+    except Exception as e:
+        raise ValueError(f"Error in executing pycode: {e}")
+
+    # Execute the test case to compute the answer
+    try:
+        exec(testcase, globals(), local_namespace)
+    except Exception as e:
+        raise ValueError(f"Error in executing testcase: {e}")
+
+    # Extract the answer
+    computed_answer = local_namespace.get("answer")
+    if computed_answer is None:
+        raise ValueError("The testcase must assign the result to a variable called 'answer'.")
+
+    return computed_answer
+
+# Mock function call handler
+def tool_function_call(messages):
+    # Extract the tool request (pycode and testcase)
+    for message in messages:
+        if message.get("role") == "function_call":
+            tool_name = message["content"]["tool_name"]
+            tool_args = message["content"]["arguments"]
+
+            if tool_name == "execute_pycode":
+                pycode = tool_args["pycode"]
+                testcase = tool_args["testcase"]
+
+                # Execute the tool and return the answer
+                return execute_pycode(pycode, testcase)
+
+# Example GPT integration with a tool
+def query_with_tool(model, messages, tool_function):
+    # Simulate a response from the LLM that calls the function
+    tool_request = {
+        "role": "function_call",
+        "content": {
+            "tool_name": "execute_pycode",
+            "arguments": {
+                "pycode": messages[-1]["pycode"],
+                "testcase": messages[-1]["testcase"],
+            },
+        },
+    }
+
+    # Simulate the LLM delegating to the tool
+    answer = tool_function([tool_request])
+    return answer
+
 
 class GSMProblem(BaseModel):
     pycode: str = Field(description='the python code input by user to generate the gsm problem')
@@ -32,6 +95,7 @@ class GSMProblem(BaseModel):
 class GSMResponse(BaseModel):
     gsm: str = Field(description='the grade school math problem (GSM) which was formulated by the user')
     reasoning: str = Field(description='the reasoning behind the answer you offered to the gsm problem')
+    clues: List[str] = Field(description='the list of clues identified in the GSM leading to the solution')
     pycode: str = Field(description='the python definition of a function called sol generated to represent the solution to the math problem. This field should purely contain a python function definition. The function arguments should correspond to the various variables defined in the gsm')
     answer: float = Field(description='the final answer to the math problem calculated by calling the function sol with the relevant value for the input variables. Answer is expressed as a numerical value')
     IC: str = Field(description='if some irrelevant context was detected put it there')
@@ -87,6 +151,11 @@ class GSMResponse(BaseModel):
 
         return True
 
+class GSMResponseTA(GSMResponse):
+    review_reasoning: str = Field(description='Offer 1 point for each correct deduction and remove 1 point for any mistake identified. Offer final score for the reasoning section')
+    review_clues: str = Field(description='Offer a score 1 point for each correctly identified clue and remove 1 point for any clue missed. Offer eventually the total score for the clues section')
+    review_code: str = Field(description='Offer a score of 1 point if you think the code computes the correct solution and -1 if not')
+    review_ic: str = Field(description='Offer a score of 1 point if you think the solution identified properly any irrelevant context. Remove one point if the problem failed to identify the irrelevant context and remove 2 points if it incorrectly marked some important clue as irrelevant')
 
 class GSMResponseFE(BaseModel):
     generic: str = Field(description='if the user did not wanted to test functional equivalence with a model python function just put the response in this field')
@@ -129,10 +198,11 @@ def message(role,content):
 
 
 class Model:
-    def __init__(self, model_name, enc_dir, dec_dir):
+    def __init__(self, model_name, enc_dir, dec_dir, ta_dir):
         self.model_name = model_name
         self.enc_dir=message("system",enc_dir)
         self.dec_dir=message('system',dec_dir)
+        self.ta_dir=message('system',ta_dir)
 
     def enc(self,mod):
         mod_src=getsource(mod)
@@ -142,7 +212,7 @@ class Model:
         ]
         return query(self.model_name, msgs, format=GSMProblem)
 
-    def dec(self,gsm,mod=None,followup=None,followup2=None):
+    def dec(self,gsm,mod=None,followup=None,followup2=None,ta=False):
         def resp(msgs,format):
             return query(self.model_name,msgs,format=format)
         question=f'please solve the following grade school mathematics problem \n "{gsm}"'
@@ -153,6 +223,16 @@ class Model:
         ]
         res={'Q1':question,
              'A1':resp(msgs, format=GSMResponse)}
+
+        if ta:
+            to_review=str(res['A1']) # the full structured response
+            ta_msgs=[
+                self.ta_dir,
+                message('user',to_review)
+            ]
+            res['Q1b']=to_review
+            res['A1b']=resp(ta_msgs, format=GSMResponseTA)
+
         if followup is None and mod is not None:
             mod_src = getsource(mod)
             followup=f'Assume you are allowed to perform some simple mapping between function arguments. Is your function sol functionally equivalent to:\n {mod_src} \n. Write a list of 3 unit tests to check the functional equivalent under the mapping you identified. Make sure to name all the input variables of the functions sol and mod when you write the unit test in order to avoid confusion in the ordering of the input variables'

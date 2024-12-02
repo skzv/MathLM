@@ -15,7 +15,7 @@ import itertools
 import argparse
 from sklearn.metrics import confusion_matrix
 from tabulate import tabulate
-import sklearn.metrics as metrics  # Added import
+import sklearn.metrics as sk_metrics  # Renamed import to avoid conflict
 
 
 class LlamaModelWrapper:
@@ -37,9 +37,9 @@ class LlamaModelWrapper:
         print(f"Loaded model from {self.model_path}")
         print(f"Model configuration: {self.model.config}")
 
-    # def unload_model(self):
-    #     del self.model
-    #     torch.cuda.empty_cache()
+    def unload_model(self):
+        del self.model
+        torch.cuda.empty_cache()
 
     def get_layer_output(self, layer_idx: int, input_ids: torch.Tensor) -> torch.Tensor:
         """Get the output of a specific layer."""
@@ -323,9 +323,16 @@ def train_probes(
 
             # Compute confusion matrix
             cm = confusion_matrix(true_labels[layer_idx], pred_labels[layer_idx])
-            metrics[layer_idx][
-                "confusion_matrix"
-            ] = cm.tolist()  # Convert to list for JSON serialization
+            metrics[layer_idx]["confusion_matrix"] = cm.tolist()
+
+            # Compute ROC metrics
+            fpr, tpr, _ = sk_metrics.roc_curve(
+                true_labels[layer_idx], prob_scores[layer_idx]
+            )
+            roc_auc = sk_metrics.auc(fpr, tpr)
+            metrics[layer_idx]["fpr"] = fpr.tolist()
+            metrics[layer_idx]["tpr"] = tpr.tolist()
+            metrics[layer_idx]["roc_auc"] = roc_auc
 
             print(f"\nLayer {layer_idx}:")
             print(f"Train Loss: {metrics[layer_idx]['train_loss'][-1]:.4f}")
@@ -386,8 +393,8 @@ def train_probes(
 
 def plot_roc_curve(true_labels, prob_scores, output_path):
     """Plot ROC curve and save the figure."""
-    fpr, tpr, _ = metrics.roc_curve(true_labels, prob_scores)
-    roc_auc = metrics.auc(fpr, tpr)
+    fpr, tpr, _ = sk_metrics.roc_curve(true_labels, prob_scores)  # Updated reference
+    roc_auc = sk_metrics.auc(fpr, tpr)  # Updated reference
 
     plt.figure()
     plt.plot(
@@ -455,6 +462,18 @@ def plot_layer_metrics(
     plt.grid(True)
     plot_filename = f"{model_name}_{probe_type}_lr{hyperparams['learning_rate']}_epochs{hyperparams['num_epochs']}_final_val_acc_across_layers.png"
     plt.savefig(os.path.join(output_dir, plot_filename))
+    plt.close()
+
+    # Plot the final ROC AUC across all layer indices
+    final_roc_auc = [metrics[layer_idx]["roc_auc"] for layer_idx in layer_indices]
+    plt.figure()
+    plt.plot(layer_indices, final_roc_auc, marker="o", color="green")
+    plt.title(f"{model_name} {probe_type} Final ROC AUC Across Layers")
+    plt.xlabel("Layer Index")
+    plt.ylabel("ROC AUC")
+    plt.grid(True)
+    roc_plot_filename = f"{model_name}_{probe_type}_lr{hyperparams['learning_rate']}_epochs{hyperparams['num_epochs']}_final_roc_auc_across_layers.png"
+    plt.savefig(os.path.join(output_dir, roc_plot_filename))
     plt.close()
 
 
@@ -537,7 +556,7 @@ def run_experiment(
         raise ValueError(f"Unknown probe type: {probe_type}")
 
     # At this point we don't need the llama model loaded
-    # model.unload_model()
+    model.unload_model()
 
     # Train probes
     metrics = train_probes(
@@ -765,7 +784,7 @@ def main():
     # learning_rates = [10**i for i in range(-6, -2)]
     # learning_rates = [0.00005, 0.0001, 0.001]
     learning_rates = [0.0001]
-    num_epochs_list = [100]
+    num_epochs_list = [1000]
     batch_sizes = [256]
 
     # For complex probes, define hidden_dims

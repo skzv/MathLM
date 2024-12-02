@@ -5,6 +5,11 @@ import json
 from dill.source import getsource
 __CLIENT__ = None
 
+def str2fn(code,name):
+    local_namespace = {}
+    exec(code, globals())
+    return globals()[name]
+
 class GSMProblem(BaseModel):
     pycode: str = Field(description='the python code input by user to generate the gsm problem')
     question: str = Field(description='the math problem being generated')
@@ -21,12 +26,16 @@ class GSMProblem(BaseModel):
         formatted_output = formatted_output.replace('\\n', '\n').replace('\\"', '"')
         return formatted_output
 
+    def mod(self):
+        return str2fn(self.pycode,'mod')
+
 class GSMResponse(BaseModel):
-    question: str = Field(description='the math problem being answered')
-    reasoning: str = Field(description='the reasoning leading to the answer offered')
-    answer: str = Field(description='the answer to the math problem')
-    pycode: str = Field(description='the python code generated to represent the math problem')
+    gsm: str = Field(description='the grade school math problem (GSM) which was formulated by the user')
+    reasoning: str = Field(description='the reasoning behind the answer you offered to the gsm problem')
+    pycode: str = Field(description='the python definition of a function called sol generated to represent the solution to the math problem. This field should purely contain a python function definition. The function arguments should correspond to the various variables defined in the gsm')
+    answer: float = Field(description='the final answer to the math problem calculated by calling the function sol with the relevant value for the input variables. Answer is expressed as a numerical value')
     IC: str = Field(description='if some irrelevant context was detected put it there')
+    testcase: str = Field(description='the function call to sol that inputs for each variable of the function the concrete value extracted from the gsm problem. The testcase should be a string looking like "answer=sol(var1=...,var2=...,var3=...,...)" where each varX corresponds to a sepcific variable and ... correspond to the concrete values')
 
     def __str__(self):
         # Pretty print the fields
@@ -36,6 +45,47 @@ class GSMResponse(BaseModel):
         # Replace escaped characters in pycode
         formatted_output = formatted_output.replace('\\n', '\n').replace('\\"', '"')
         return formatted_output
+
+    def sol(self):
+        return str2fn(self.pycode,'sol')
+
+    def validate(self):
+        """
+        Validates the 'answer' field by executing the 'pycode' and 'testcase'.
+        If there's a mismatch, it updates the 'answer' field with the correct value.
+        """
+        # Define a local namespace to execute the code
+        local_namespace = {}
+
+        # Execute the function definition from pycode
+        try:
+            exec(self.pycode, globals(), local_namespace)
+        except Exception as e:
+            raise ValueError(f"Error in executing pycode: {e}")
+
+        # Extract the function object
+        sol = local_namespace.get("sol")
+        if sol is None:
+            raise ValueError("The pycode field must define a function called 'sol'.")
+
+        # Execute the testcase
+        try:
+            exec(self.testcase, globals(), local_namespace)
+        except Exception as e:
+            raise ValueError(f"Error in executing testcase: {e}")
+
+        # Extract the computed answer
+        computed_answer = local_namespace.get("answer")
+        if computed_answer is None:
+            raise ValueError("The testcase must assign the result to a variable called 'answer'.")
+
+        # Compare and update the answer field if necessary
+        if self.answer != computed_answer:
+            print(f"Warning: Answer field ({self.answer}) does not match computed answer ({computed_answer}). Updating...")
+            #self.answer = computed_answer
+            return False
+
+        return True
 
 
 class GSMResponseFE(BaseModel):

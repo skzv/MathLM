@@ -1,6 +1,9 @@
 import torch
 import torch.nn.functional as F
 
+def last_pooling(embeddings):
+    return embeddings[:,-1,:]
+
 def variance_pooling(embeddings):
     """
     Perform variance pooling on embeddings.

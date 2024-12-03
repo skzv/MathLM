@@ -3,7 +3,7 @@ import asyncio
 import time
 from openai import AsyncOpenAI, RateLimitError
 
-client = AsyncOpenAI(api_key='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')
+client = AsyncOpenAI(api_key='sk-proj')
 
 # Semaphore to limit concurrent API calls
 semaphore = asyncio.Semaphore(20)

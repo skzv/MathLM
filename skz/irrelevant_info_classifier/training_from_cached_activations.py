@@ -264,6 +264,7 @@ def train_probes(
             for i, (probe, optimizer) in enumerate(zip(probes, optimizers)):
                 optimizer.zero_grad()
                 layer_output = batch[f"layer_{layer_indices[i]}"].to(accelerator.device)
+                # print(layer_output.shape)
                 outputs = probe(layer_output)
                 loss = criterion(outputs, labels)
                 accelerator.backward(loss)
@@ -670,7 +671,7 @@ def save_probe_with_hyperparams(probe, checkpoint_path, hyperparams):
         json.dump(hyperparams, f)
 
 
-def load_probe(checkpoint_path: str) -> nn.Module:
+def load_probe(checkpoint_path: str, device) -> nn.Module:
     """
     Load a probe model from a checkpoint by reading its hyperparameters from a JSON file.
 
@@ -705,9 +706,10 @@ def load_probe(checkpoint_path: str) -> nn.Module:
         raise ValueError(f"Unknown probe type: {probe_type}")
 
     # Load state dict
-    probe.load_state_dict(torch.load(checkpoint_path))
+    probe.load_state_dict(torch.load(checkpoint_path, map_location=device, weights_only=True))
     probe.eval()
-    return probe
+    # print(probe)
+    return probe, hyperparams
 
 
 def main():
@@ -784,7 +786,7 @@ def main():
     # learning_rates = [10**i for i in range(-6, -2)]
     # learning_rates = [0.00005, 0.0001, 0.001]
     learning_rates = [0.0001]
-    num_epochs_list = [1000]
+    num_epochs_list = [5000]
     batch_sizes = [256]
 
     # For complex probes, define hidden_dims

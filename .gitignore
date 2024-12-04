@@ -18,4 +18,6 @@
 
 skz/irrelevant_info_classifier/training_runs*
 
-skz/irrelevant_info_classifier/activation_cache
+skz/irrelevant_info_classifier/activation_cache*
+
+skz/irrelevant_info_classifier/datasets/*.jsonl
